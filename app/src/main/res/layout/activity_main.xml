@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/app_title"
+        android:id="@+id/txt_app_name_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -19,17 +19,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/app_subdescription"
+        android:id="@+id/txt_app_subtitle_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_subtitle"
+        android:text="@string/app_subtitle_login"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_title" />
+        app:layout_constraintTop_toBottomOf="@id/txt_app_name_login" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_email_login"
+        android:id="@+id/tf_email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,35 +38,35 @@
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_subdescription">
+        app:layout_constraintTop_toBottomOf="@+id/txt_app_subtitle_login">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_email_login_content"
+            android:id="@+id/tf_email_login_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_password_login"
+        android:id="@+id/tf_password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_field_email_login"
+        app:layout_constraintTop_toBottomOf="@+id/tf_email_login"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_password_login_content"
+            android:id="@+id/tf_password_register_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/text_view_forgot_password"
+        android:id="@+id/txt_forgot_password_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -74,11 +74,11 @@
         android:minHeight="48dp"
         android:text="@string/forgot_password"
         android:textColor="@color/red"
-        app:layout_constraintEnd_toEndOf="@+id/text_field_password_login"
-        app:layout_constraintTop_toBottomOf="@id/text_field_password_login" />
+        app:layout_constraintEnd_toEndOf="@+id/tf_password_login"
+        app:layout_constraintTop_toBottomOf="@id/tf_password_login" />
 
     <Button
-        android:id="@+id/button_entrar"
+        android:id="@+id/btn_enter_login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -87,7 +87,7 @@
         android:textColor="#F5F5F5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_forgot_password" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_forgot_password_login" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -96,22 +96,22 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_entrar">
+        app:layout_constraintTop_toBottomOf="@+id/btn_enter_login">
 
         <TextView
-            android:id="@+id/text_view_dont_have_account"
+            android:id="@+id/txt_dont_have_account_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:text="@string/dont_have_account" />
 
         <TextView
-            android:id="@+id/text_view_register"
+            android:id="@+id/txt_register_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:minHeight="48dp"
-            android:text="@string/register"
+            android:text="@string/register_login"
             android:textColor="@color/red" />
     </LinearLayout>
 

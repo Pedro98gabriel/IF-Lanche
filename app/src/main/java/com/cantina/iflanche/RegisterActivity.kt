@@ -17,7 +17,7 @@ class RegisterActivity : AppCompatActivity() {
 
         var userType: Array<String> = arrayOf("Aluno", "Funcionário")
 
-        val autoComplete: AutoCompleteTextView = binding.autoCompleteTextViewRegister
+        val autoComplete: AutoCompleteTextView = binding.tfOptionsUserTypeRegister
 
         val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
 

@@ -8,11 +8,11 @@
     android:focusableInTouchMode="true">
 
     <TextView
-        android:id="@+id/app_title_register"
+        android:id="@+id/txt_title_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/txt_register"
+        android:text="@string/register"
         android:textColor="@color/red"
         android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,17 +20,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/app_subtitle_register"
+        android:id="@+id/txt_subtitle_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_subtitle_register"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_title_register" />
+        app:layout_constraintTop_toBottomOf="@id/txt_title_register" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_name_register"
+        android:id="@+id/tf_name_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -39,17 +39,17 @@
         android:hint="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_subtitle_register">
+        app:layout_constraintTop_toBottomOf="@+id/txt_subtitle_register">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_name_register_content"
+            android:id="@+id/tf_name_register_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_email_register"
+        android:id="@+id/tf_email_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -58,10 +58,10 @@
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_field_name_register">
+        app:layout_constraintTop_toBottomOf="@id/tf_name_register">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_email_register_content"
+            android:id="@+id/tf_email_register_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -69,68 +69,69 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_user_type_dropdown_register"
+        android:id="@+id/tf_dropdown_user_type_register"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/user_type"
-        app:layout_constraintTop_toBottomOf="@id/text_field_email_register">
+        android:textColorHint="@color/black_variant"
+        app:layout_constraintTop_toBottomOf="@id/tf_email_register">
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView_register"
+            android:id="@+id/tf_options_user_type_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            app:layout_constraintTop_toBottomOf="@id/text_field_email_register" />
+            app:layout_constraintTop_toBottomOf="@id/tf_email_register" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_password_login_register"
+        android:id="@+id/tf_password_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_field_user_type_dropdown_register"
+        app:layout_constraintTop_toBottomOf="@id/tf_dropdown_user_type_register"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_password_login_content"
+            android:id="@+id/tf_password_register_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_password_login_register_confirm"
+        android:id="@+id/tf_password_confirm_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_field_password_login_register"
+        app:layout_constraintTop_toBottomOf="@id/tf_password_register"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_password_login_content_confirm"
+            android:id="@+id/tf_password_confirm_register_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_register"
         style="?attr/materialButtonOutlinedStyle"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/txt_register"
+        android:text="@string/register"
         android:textColor="@color/red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_field_password_login_register_confirm" />
+        app:layout_constraintTop_toBottomOf="@+id/tf_password_confirm_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

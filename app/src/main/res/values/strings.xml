@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">IF-Lanche</string>
-    <string name="app_subtitle">Entre na sua conta para acessar as novidades</string>
+    <string name="app_subtitle_login">Entre na sua conta para acessar as novidades</string>
     <string name="email">Email</string>
     <string name="password">Senha</string>
-    <string name="enter">Entrar</string>
     <string name="forgot_password">Esqueci minha senha</string>
+    <string name="enter">Entrar</string>
     <string name="dont_have_account">Não possui uma conta? </string>
-    <string name="register">Cadastre-se</string>
+    <string name="register_login">Cadastre-se</string>
+    <string name="register">Cadastrar</string>
     <string name="app_subtitle_register">Faça seu cadastro para acessar o sistema</string>
     <string name="name">Nome</string>
     <string name="user_type">Tipo de usuário</string>
     <string name="confirm_password">Confirmar senha</string>
-    <string name="txt_register">Cadastrar</string>
 </resources>

@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.textViewRegister.setOnClickListener {
+        binding.txtRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             Log.d("MainActivity", "Starting RegisterActivity")
             startActivity(intent)
