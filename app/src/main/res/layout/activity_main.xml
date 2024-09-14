@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/app_subtitle"
+        android:id="@+id/app_subdescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_subtitle"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/app_title" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_email"
+        android:id="@+id/text_field_email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -38,27 +38,28 @@
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_subtitle">
+        app:layout_constraintTop_toBottomOf="@+id/app_subdescription">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_field_email_login_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_field_password"
+        android:id="@+id/text_field_password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_field_email"
+        app:layout_constraintTop_toBottomOf="@+id/text_field_email_login"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_field_password_content"
+            android:id="@+id/text_field_password_login_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
@@ -73,8 +74,8 @@
         android:minHeight="48dp"
         android:text="@string/forgot_password"
         android:textColor="@color/red"
-        app:layout_constraintEnd_toEndOf="@+id/text_field_password"
-        app:layout_constraintTop_toBottomOf="@id/text_field_password" />
+        app:layout_constraintEnd_toEndOf="@+id/text_field_password_login"
+        app:layout_constraintTop_toBottomOf="@id/text_field_password_login" />
 
     <Button
         android:id="@+id/button_entrar"
