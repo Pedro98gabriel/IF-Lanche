@@ -1,7 +1,6 @@
 package com.cantina.iflanche
 
 import android.os.Bundle
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -15,16 +14,18 @@ class RegisterActivity : AppCompatActivity() {
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        dropdownUserTypeConfiguration(binding)
+    }
+
+    private fun dropdownUserTypeConfiguration(binding: ActivityRegisterBinding) {
         var userType: Array<String> = arrayOf("Aluno", "Funcionário")
-
         val autoComplete: AutoCompleteTextView = binding.tfOptionsUserTypeRegister
-
         val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
 
         autoComplete.setAdapter(adapter)
 
         autoComplete.onItemClickListener =
-            AdapterView.OnItemClickListener { adapterView, view, position, id ->
+            AdapterView.OnItemClickListener { adapterView, _, position, _ ->
 
                 val itemSeleced = adapterView.getItemAtPosition(position).toString()
                 Toast.makeText(this, "Item: $itemSeleced", Toast.LENGTH_SHORT).show()
