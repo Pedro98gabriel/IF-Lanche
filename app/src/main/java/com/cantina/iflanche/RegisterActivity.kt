@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun dropdownUserTypeConfiguration(binding: ActivityRegisterBinding) {
-        var userType: Array<String> = arrayOf("Aluno", "Funcionário")
+        val userType: Array<String> = arrayOf("Aluno", "Funcionário")
         val autoComplete: AutoCompleteTextView = binding.tfOptionsUserTypeRegister
         val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
 
@@ -27,8 +27,8 @@ class RegisterActivity : AppCompatActivity() {
         autoComplete.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
 
-                val itemSeleced = adapterView.getItemAtPosition(position).toString()
-                Toast.makeText(this, "Item: $itemSeleced", Toast.LENGTH_SHORT).show()
+                val itemSelected = adapterView.getItemAtPosition(position).toString()
+                Toast.makeText(this, "Item: $itemSelected", Toast.LENGTH_SHORT).show()
             }
     }
 
