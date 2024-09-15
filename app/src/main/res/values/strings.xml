@@ -12,4 +12,5 @@
     <string name="name">Nome</string>
     <string name="user_type">Tipo de usuário</string>
     <string name="confirm_password">Confirmar senha</string>
+    <string name="arrow_back_description">Voltar para tela de login</string>
 </resources>
