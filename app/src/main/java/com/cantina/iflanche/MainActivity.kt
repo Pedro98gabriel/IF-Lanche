@@ -13,6 +13,10 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        redirectToRegisterScreen(binding)
+    }
+
+    private fun redirectToRegisterScreen(binding: ActivityMainBinding) {
         binding.txtRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             Log.d("MainActivity", "Starting RegisterActivity")
