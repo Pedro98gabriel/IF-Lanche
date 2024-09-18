@@ -1,7 +1,6 @@
 package com.cantina.iflanche
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -24,7 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun createUserAccount(binding: ActivityRegisterBinding) {
-        binding.btnRegister.setOnClickListener() {
+        binding.btnRegister.setOnClickListener {
             Toast.makeText(this, "Clicou no botão", Toast.LENGTH_SHORT).show()
 
             //test to save to firebase
