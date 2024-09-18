@@ -14,6 +14,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         redirectToRegisterScreen(binding)
+
+        loginAndRedirect(binding)
+    }
+
+    private fun loginAndRedirect(binding: ActivityMainBinding) {
+        binding.btnEnterLogin.setOnClickListener() {
+            val intent = Intent(this, HomeActivity::class.java)
+            Log.d("MainActivity", "Starting HomeActivity")
+            startActivity(intent)
+        }
     }
 
     private fun redirectToRegisterScreen(binding: ActivityMainBinding) {
