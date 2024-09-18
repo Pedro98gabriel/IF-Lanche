@@ -36,6 +36,8 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         android:hint="@string/email"
+        android:textColorHint="@color/dark_grey"
+        app:boxStrokeColor="@color/text_input_box_stroke_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_app_subtitle_login">
@@ -53,6 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:hint="@string/password"
+        android:textColorHint="@color/dark_grey"
+        app:boxStrokeColor="@color/text_input_box_stroke_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tf_email_login"
