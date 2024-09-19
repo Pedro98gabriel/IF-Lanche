@@ -11,6 +11,10 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
+    private val userType: Array<String> = arrayOf("Aluno", "Funcionário")
+    private lateinit var adapter: ArrayAdapter<String>
+    private var itemSelected: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -24,12 +28,16 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createUserAccount(binding: ActivityRegisterBinding) {
         binding.btnRegister.setOnClickListener {
-            Toast.makeText(this, "Clicou no botão", Toast.LENGTH_SHORT).show()
-
-            //test to save to firebase
-            val database = Firebase.database
-            val myRef = database.getReference("message")
-            myRef.setValue("Hello, World!")
+            if (itemSelected != null) {
+                // Use itemSelected para o que precisar
+                Toast.makeText(this, "Cadastrando: $itemSelected", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Selecione um tipo de usuário", Toast.LENGTH_SHORT).show()
+            }
+//            //test to save to firebase
+//            val database = Firebase.database
+//            val myRef = database.getReference("message")
+//            myRef.setValue("Hello, World!")
 
         }
     }
@@ -41,16 +49,14 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun dropdownUserTypeConfiguration(binding: ActivityRegisterBinding) {
-        val userType: Array<String> = arrayOf("Aluno", "Funcionário")
         val autoComplete: AutoCompleteTextView = binding.tfOptionsUserTypeRegister
-        val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
+        adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
 
         autoComplete.setAdapter(adapter)
 
         autoComplete.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
-
-                val itemSelected = adapterView.getItemAtPosition(position).toString()
+                itemSelected = adapterView.getItemAtPosition(position).toString()
                 Toast.makeText(this, "Item: $itemSelected", Toast.LENGTH_SHORT).show()
             }
     }
