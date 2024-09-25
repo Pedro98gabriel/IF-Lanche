@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
-            HelperFunctions.clearFocusFromAllFields(
+            CommonFunctions.clearFocusFromAllFields(
                 listOf(
                     binding.tfNameRegisterContent,
                     binding.tfEmailRegisterContent,
@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            HelperFunctions.clearFocusFromAllFields(
+            CommonFunctions.clearFocusFromAllFields(
                 listOf(
                     binding.tfNameRegisterContent,
                     binding.tfEmailRegisterContent,
@@ -53,23 +53,23 @@ class RegisterActivity : AppCompatActivity() {
             false
         }
 
-        HelperFunctions.addTextWatcherAndFocusListener(
+        CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfNameRegisterContent,
             binding.tfNameRegister
         )
-        HelperFunctions.addTextWatcherAndFocusListener(
+        CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfEmailRegisterContent,
             binding.tfEmailRegister
         )
-        HelperFunctions.addTextWatcherAndFocusListener(
+        CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfPasswordRegisterContent,
             binding.tfPasswordRegister
         )
-        HelperFunctions.addTextWatcherAndFocusListener(
+        CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfPasswordConfirmRegisterContent,
             binding.tfPasswordConfirmRegister
         )
-        HelperFunctions.addTextWatcherAndFocusListener(
+        CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfOptionsUserTypeRegister,
             binding.tfDropdownUserTypeRegister
         )
@@ -97,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (email.isEmpty() || !HelperFunctions.isValidEmail(email)) {
+        if (email.isEmpty() || !CommonFunctions.isValidEmail(email)) {
             binding.tfEmailRegister.error = "Email inválido"
             isValid = false
         }
