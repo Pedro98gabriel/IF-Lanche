@@ -16,44 +16,26 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var registerNameTextInput: TextInputLayout
-    private lateinit var registerNameTextInputContent: TextInputEditText
-    private lateinit var registerEmailTextInput: TextInputLayout
-    private lateinit var registerEmailTextInputContent: TextInputEditText
-    private lateinit var registerPassWordTextInput: TextInputLayout
-    private lateinit var registerPassWordTextInputContent: TextInputEditText
-    private lateinit var registerConfirmPassWordTextInput: TextInputLayout
-    private lateinit var registerConfirmPassWordTextInputContent: TextInputEditText
-    private lateinit var registerButton: Button
+    private lateinit var binding: ActivityRegisterBinding
     private val userType: Array<String> = arrayOf("Aluno", "Funcionário")
-    private lateinit var adapter: ArrayAdapter<String>
     private var userTypeSelected: String? = null
-
-    private lateinit var registerUserType: TextInputLayout
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        registerUserType = binding.tfDropdownUserTypeRegister
+        setupUI()
+        setupListeners()
+    }
 
-        registerNameTextInput = binding.tfNameRegister
-        registerNameTextInputContent = binding.tfNameRegisterContent
-        registerEmailTextInput = binding.tfEmailRegister
-        registerEmailTextInputContent = binding.tfEmailRegisterContent
-        registerPassWordTextInput = binding.tfPasswordRegister
-        registerPassWordTextInputContent = binding.tfPasswordRegisterContent
-        registerConfirmPassWordTextInput = binding.tfPasswordConfirmRegister
-        registerConfirmPassWordTextInputContent = binding.tfPasswordConfirmRegisterContent
+    private fun setupUI() {
+        val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
+        binding.tfOptionsUserTypeRegister.setAdapter(adapter)
+    }
 
-        registerButton = binding.btnRegister
-
-        dropdownUserTypeConfiguration(binding)
-        closeActivityOnClick(binding)
-
-        registerButton.setOnClickListener {
+    private fun setupListeners() {
+        binding.btnRegister.setOnClickListener {
             clearFocusFromAllFields()
             createUserAccount()
         }
@@ -63,50 +45,61 @@ class RegisterActivity : AppCompatActivity() {
             false
         }
 
-        addTextWatcherAndFocusListener(registerNameTextInputContent, binding.tfNameRegister)
-        addTextWatcherAndFocusListener(registerEmailTextInputContent, binding.tfEmailRegister)
-        addTextWatcherAndFocusListener(registerPassWordTextInputContent, binding.tfPasswordRegister)
+        addTextWatcherAndFocusListener(binding.tfNameRegisterContent, binding.tfNameRegister)
+        addTextWatcherAndFocusListener(binding.tfEmailRegisterContent, binding.tfEmailRegister)
         addTextWatcherAndFocusListener(
-            registerConfirmPassWordTextInputContent,
+            binding.tfPasswordRegisterContent,
+            binding.tfPasswordRegister
+        )
+        addTextWatcherAndFocusListener(
+            binding.tfPasswordConfirmRegisterContent,
             binding.tfPasswordConfirmRegister
         )
-        addTextWatcherAndFocusListenerToDropdown(
+        addTextWatcherAndFocusListener(
             binding.tfOptionsUserTypeRegister,
             binding.tfDropdownUserTypeRegister
         )
 
+        binding.tfOptionsUserTypeRegister.onItemClickListener =
+            AdapterView.OnItemClickListener { adapterView, _, position, _ ->
+                userTypeSelected = adapterView.getItemAtPosition(position).toString()
+            }
+
+        binding.imbBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun createUserAccount() {
-        val name = registerNameTextInputContent.text.toString().trim()
-        val email = registerEmailTextInputContent.text.toString().trim()
-        val password = registerPassWordTextInputContent.text.toString().trim()
-        val confirmPassword = registerConfirmPassWordTextInputContent.text.toString().trim()
+        val name = binding.tfNameRegisterContent.text.toString().trim()
+        val email = binding.tfEmailRegisterContent.text.toString().trim()
+        val password = binding.tfPasswordRegisterContent.text.toString().trim()
+        val confirmPassword = binding.tfPasswordConfirmRegisterContent.text.toString().trim()
 
         var isValid = true
 
         if (name.isEmpty()) {
-            registerNameTextInput.error = "Por favor, preencha o nome"
+            binding.tfNameRegister.error = "Por favor, preencha o nome"
             isValid = false
         }
 
         if (email.isEmpty() || !isValidEmail(email)) {
-            registerEmailTextInput.error = "Email inválido"
+            binding.tfEmailRegister.error = "Email inválido"
             isValid = false
         }
 
         if (password.isEmpty()) {
-            registerPassWordTextInput.error = "Por favor, preencha a senha"
+            binding.tfPasswordRegister.error = "Por favor, preencha a senha"
             isValid = false
         }
 
         if (confirmPassword.isEmpty() || password != confirmPassword) {
-            registerConfirmPassWordTextInput.error = "As senhas não coincidem"
+            binding.tfPasswordConfirmRegister.error = "As senhas não coincidem"
             isValid = false
         }
 
         if (userTypeSelected == null) {
-            registerUserType.error = "Selecione um tipo de usuário"
+            binding.tfDropdownUserTypeRegister.error = "Selecione um tipo de usuário"
             isValid = false
         }
 
@@ -116,80 +109,82 @@ class RegisterActivity : AppCompatActivity() {
 
         // Proceed with account creation
         Toast.makeText(this, "Conta criada com sucesso", Toast.LENGTH_SHORT).show()
-
-
     }
 
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun closeActivityOnClick(binding: ActivityRegisterBinding) {
-        binding.imbBack.setOnClickListener {
-            finish()
-        }
-    }
+    private fun addTextWatcherAndFocusListener(view: View, textInputLayout: TextInputLayout) {
+        when (view) {
+            is TextInputEditText -> {
+                view.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-    private fun dropdownUserTypeConfiguration(binding: ActivityRegisterBinding) {
-        val autoComplete: AutoCompleteTextView = binding.tfOptionsUserTypeRegister
-        adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        textInputLayout.error = null
+                    }
 
-        autoComplete.setAdapter(adapter)
+                    override fun afterTextChanged(s: Editable?) {}
+                })
 
-        autoComplete.onItemClickListener =
-            AdapterView.OnItemClickListener { adapterView, _, position, _ ->
-                userTypeSelected = adapterView.getItemAtPosition(position).toString()
-//                Toast.makeText(this, "Item: $itemSelected", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun addTextWatcherAndFocusListener(
-        editText: TextInputEditText,
-        textInputLayout: TextInputLayout
-    ) {
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                textInputLayout.error = null
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-
-        editText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                textInputLayout.error = null
-            }
-        }
-    }
-
-    private fun addTextWatcherAndFocusListenerToDropdown(
-        autoCompleteTextView: AutoCompleteTextView,
-        textInputLayout: TextInputLayout
-    ) {
-        autoCompleteTextView.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                textInputLayout.error = null
+                view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        textInputLayout.error = null
+                    }
+                }
             }
 
-            override fun afterTextChanged(s: Editable?) {}
-        })
+            is AutoCompleteTextView -> {
+                view.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
+                    }
 
-        autoCompleteTextView.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                textInputLayout.error = null
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
+                        textInputLayout.error = null
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {}
+                })
+
+                view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        textInputLayout.error = null
+                    }
+                }
             }
         }
     }
 
     private fun clearFocusFromAllFields() {
-        registerNameTextInput.clearFocus()
-        registerEmailTextInputContent.clearFocus()
-        registerPassWordTextInputContent.clearFocus()
-        registerConfirmPassWordTextInputContent.clearFocus()
-        registerUserType.clearFocus()
+        val fields = listOf(
+            binding.tfNameRegisterContent,
+            binding.tfEmailRegisterContent,
+            binding.tfPasswordRegisterContent,
+            binding.tfPasswordConfirmRegisterContent,
+            binding.tfOptionsUserTypeRegister
+        )
+        fields.forEach { it.clearFocus() }
     }
 }
