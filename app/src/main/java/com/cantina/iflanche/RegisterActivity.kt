@@ -1,19 +1,11 @@
 package com.cantina.iflanche
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Patterns
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -25,37 +17,59 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupUI()
+        setupUserTypeDropdown()
         setupListeners()
     }
 
-    private fun setupUI() {
+    private fun setupUserTypeDropdown() {
         val adapter = ArrayAdapter(this, R.layout.list_item_dropdowm, userType)
         binding.tfOptionsUserTypeRegister.setAdapter(adapter)
     }
 
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
-            clearFocusFromAllFields()
+            HelperFunctions.clearFocusFromAllFields(
+                listOf(
+                    binding.tfNameRegisterContent,
+                    binding.tfEmailRegisterContent,
+                    binding.tfPasswordRegisterContent,
+                    binding.tfPasswordConfirmRegisterContent,
+                    binding.tfOptionsUserTypeRegister
+                )
+            )
             createUserAccount()
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            clearFocusFromAllFields()
+            HelperFunctions.clearFocusFromAllFields(
+                listOf(
+                    binding.tfNameRegisterContent,
+                    binding.tfEmailRegisterContent,
+                    binding.tfPasswordRegisterContent,
+                    binding.tfPasswordConfirmRegisterContent,
+                    binding.tfOptionsUserTypeRegister
+                )
+            )
             false
         }
 
-        addTextWatcherAndFocusListener(binding.tfNameRegisterContent, binding.tfNameRegister)
-        addTextWatcherAndFocusListener(binding.tfEmailRegisterContent, binding.tfEmailRegister)
-        addTextWatcherAndFocusListener(
+        HelperFunctions.addTextWatcherAndFocusListener(
+            binding.tfNameRegisterContent,
+            binding.tfNameRegister
+        )
+        HelperFunctions.addTextWatcherAndFocusListener(
+            binding.tfEmailRegisterContent,
+            binding.tfEmailRegister
+        )
+        HelperFunctions.addTextWatcherAndFocusListener(
             binding.tfPasswordRegisterContent,
             binding.tfPasswordRegister
         )
-        addTextWatcherAndFocusListener(
+        HelperFunctions.addTextWatcherAndFocusListener(
             binding.tfPasswordConfirmRegisterContent,
             binding.tfPasswordConfirmRegister
         )
-        addTextWatcherAndFocusListener(
+        HelperFunctions.addTextWatcherAndFocusListener(
             binding.tfOptionsUserTypeRegister,
             binding.tfDropdownUserTypeRegister
         )
@@ -83,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (email.isEmpty() || !isValidEmail(email)) {
+        if (email.isEmpty() || !HelperFunctions.isValidEmail(email)) {
             binding.tfEmailRegister.error = "Email inválido"
             isValid = false
         }
@@ -109,82 +123,5 @@ class RegisterActivity : AppCompatActivity() {
 
         // Proceed with account creation
         Toast.makeText(this, "Conta criada com sucesso", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun isValidEmail(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun addTextWatcherAndFocusListener(view: View, textInputLayout: TextInputLayout) {
-        when (view) {
-            is TextInputEditText -> {
-                view.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        textInputLayout.error = null
-                    }
-
-                    override fun afterTextChanged(s: Editable?) {}
-                })
-
-                view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-                    if (hasFocus) {
-                        textInputLayout.error = null
-                    }
-                }
-            }
-
-            is AutoCompleteTextView -> {
-                view.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                    ) {
-                    }
-
-                    override fun onTextChanged(
-                        s: CharSequence?,
-                        start: Int,
-                        before: Int,
-                        count: Int
-                    ) {
-                        textInputLayout.error = null
-                    }
-
-                    override fun afterTextChanged(s: Editable?) {}
-                })
-
-                view.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
-                    if (hasFocus) {
-                        textInputLayout.error = null
-                    }
-                }
-            }
-        }
-    }
-
-    private fun clearFocusFromAllFields() {
-        val fields = listOf(
-            binding.tfNameRegisterContent,
-            binding.tfEmailRegisterContent,
-            binding.tfPasswordRegisterContent,
-            binding.tfPasswordConfirmRegisterContent,
-            binding.tfOptionsUserTypeRegister
-        )
-        fields.forEach { it.clearFocus() }
     }
 }
