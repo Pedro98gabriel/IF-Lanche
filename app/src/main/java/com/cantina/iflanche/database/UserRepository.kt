@@ -45,7 +45,6 @@ class UserRepository(private val context: Context) {
         callback: (Boolean, String?) -> Unit
     ) {
         val userMap = mapOf(
-            "id" to userId,
             "name" to name,
             "email" to email,
             "userType" to userType,
