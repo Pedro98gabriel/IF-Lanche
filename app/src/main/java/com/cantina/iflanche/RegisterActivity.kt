@@ -5,6 +5,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cantina.iflanche.database.UserRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -14,6 +15,7 @@ class RegisterActivity : AppCompatActivity() {
     private val userType: Array<String> = arrayOf("Aluno", "Funcionário")
     private var userTypeSelected: String? = null
 
+    private lateinit var userRepository: UserRepository
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -26,6 +28,7 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
+        userRepository = UserRepository(this)
 
         setupUserTypeDropdown()
         setupListeners()
@@ -112,8 +115,8 @@ class RegisterActivity : AppCompatActivity() {
             isValid = false
         }
 
-        if (password.isEmpty()) {
-            binding.tfPasswordRegister.error = "Por favor, preencha a senha"
+        if (password.isEmpty() || password.length < 6) {
+            binding.tfPasswordRegister.error = "A senha deve ter pelo menos 6 caracteres"
             isValid = false
         }
 
@@ -131,64 +134,13 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        registerUser(name, email, userTypeSelected!!, password)
-
-    }
-
-    private fun registerUser(name: String, email: String, userType: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    // Salvar informações do usuário no Realtime Database
-                    user?.let {
-                        saveUserInDatabase(it.uid, name, email, userType, password)
-                    }
-                    Toast.makeText(
-                        this,
-                        "Cadastro realizado com sucesso: ${user?.email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Cadastro falhou: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        //Register in firebase
+        userRepository.registerUser(name, email, userTypeSelected!!, password) { success, message ->
+            if (success) {
+                Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Cadastro falhou: $message", Toast.LENGTH_SHORT).show()
             }
+        }
     }
-
-    private fun saveUserInDatabase(
-        userId: String,
-        name: String,
-        email: String,
-        userType: String,
-        password: String
-    ) {
-        val userMap = mapOf(
-            "id" to userId,
-            "name" to name,
-            "email" to email,
-            "userType" to userType,
-            "password" to password,
-        )
-
-        val databaseReference = database.getReference("users").child(userId)
-        databaseReference.setValue(userMap)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Dados salvos no Realtime Database", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(
-                        this,
-                        "Falha ao salvar dados: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-    }
-
 }
-
