@@ -1,4 +1,4 @@
-package com.cantina.iflanche.database
+package com.cantina.iflanche.utils
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth

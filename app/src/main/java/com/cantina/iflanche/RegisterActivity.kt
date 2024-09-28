@@ -5,7 +5,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.cantina.iflanche.database.UserRepository
+import com.cantina.iflanche.utils.UserRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
