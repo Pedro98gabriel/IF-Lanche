@@ -22,7 +22,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -43,16 +42,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
-            CommonFunctions.clearFocusFromAllFields(
-                listOf(
-                    binding.tfNameRegisterContent,
-                    binding.tfEmailRegisterContent,
-                    binding.tfPasswordRegisterContent,
-                    binding.tfPasswordConfirmRegisterContent,
-                    binding.tfOptionsUserTypeRegister
-                ),
-                this
-            )
             createUserAccount()
         }
 
@@ -101,6 +90,10 @@ class RegisterActivity : AppCompatActivity() {
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
                 userTypeSelected = adapterView.getItemAtPosition(position).toString()
             }
+
+        binding.tfOptionsUserTypeRegister.setOnClickListener {
+            binding.tfDropdownUserTypeRegister.error = null
+        }
 
         binding.imbBack.setOnClickListener {
             finish()
