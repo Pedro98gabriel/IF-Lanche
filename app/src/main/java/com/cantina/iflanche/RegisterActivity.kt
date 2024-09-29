@@ -3,12 +3,14 @@ package com.cantina.iflanche
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.utils.UserRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.core.view.View
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -134,12 +136,20 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
+        binding.progressBarRegister.visibility = ProgressBar.VISIBLE
+
         //Register in firebase
         userRepository.registerUser(name, email, userTypeSelected!!, password) { success, message ->
+            binding.progressBarRegister.visibility = ProgressBar.GONE
+
             if (success) {
                 Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Cadastro falhou: $message", Toast.LENGTH_SHORT).show()
+                if (message?.contains("email address is already in use") == true) {
+                    binding.tfEmailRegister.error = "Email já cadastrado"
+                } else {
+                    Toast.makeText(this, "Cadastro falhou: $message", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
