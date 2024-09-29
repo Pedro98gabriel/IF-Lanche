@@ -1,9 +1,11 @@
 package com.cantina.iflanche
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -75,7 +77,13 @@ object CommonFunctions {
         }
     }
 
-    fun clearFocusFromAllFields(fields: List<View>) {
+    fun clearFocusFromAllFields(fields: List<View>, context: Context) {
         fields.forEach { it.clearFocus() }
+        hideKeyboard(fields.first(), context)
+    }
+
+    fun hideKeyboard(view: View, context: Context) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

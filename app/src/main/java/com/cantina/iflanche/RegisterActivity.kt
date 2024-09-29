@@ -1,6 +1,7 @@
 package com.cantina.iflanche
 
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ProgressBar
@@ -10,7 +11,6 @@ import com.cantina.iflanche.utils.UserRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.view.View
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -50,7 +50,8 @@ class RegisterActivity : AppCompatActivity() {
                     binding.tfPasswordRegisterContent,
                     binding.tfPasswordConfirmRegisterContent,
                     binding.tfOptionsUserTypeRegister
-                )
+                ),
+                this
             )
             createUserAccount()
         }
@@ -63,7 +64,8 @@ class RegisterActivity : AppCompatActivity() {
                     binding.tfPasswordRegisterContent,
                     binding.tfPasswordConfirmRegisterContent,
                     binding.tfOptionsUserTypeRegister
-                )
+                ),
+                this
             )
             false
         }
@@ -88,6 +90,12 @@ class RegisterActivity : AppCompatActivity() {
             binding.tfOptionsUserTypeRegister,
             binding.tfDropdownUserTypeRegister
         )
+        binding.tfOptionsUserTypeRegister.onFocusChangeListener =
+            View.OnFocusChangeListener { view, hasFocus ->
+                if (hasFocus) {
+                    CommonFunctions.hideKeyboard(view, this)
+                }
+            }
 
         binding.tfOptionsUserTypeRegister.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
