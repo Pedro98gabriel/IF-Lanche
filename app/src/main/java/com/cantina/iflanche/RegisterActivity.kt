@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.cantina.iflanche.utils.UserRepository
+import com.cantina.iflanche.utils.UserRegisterRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -17,10 +17,12 @@ class RegisterActivity : AppCompatActivity() {
     private val userType: Array<String> = arrayOf("Aluno", "Funcionário")
     private var userTypeSelected: String? = null
 
-    private lateinit var userRepository: UserRepository
+    private lateinit var userRegisterRepository: UserRegisterRepository
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private lateinit var inputFields: List<View>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +31,15 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        userRepository = UserRepository(this)
+        userRegisterRepository = UserRegisterRepository(this)
+
+        inputFields = listOf(
+            binding.tfNameRegisterContent,
+            binding.tfEmailRegisterContent,
+            binding.tfPasswordRegisterContent,
+            binding.tfPasswordConfirmRegisterContent,
+            binding.tfOptionsUserTypeRegister
+        )
 
         setupUserTypeDropdown()
         setupListeners()
@@ -42,20 +52,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
+            CommonFunctions.clearFocusFromAllFields(inputFields, this)
             createUserAccount()
         }
 
         binding.root.setOnTouchListener { _, _ ->
-            CommonFunctions.clearFocusFromAllFields(
-                listOf(
-                    binding.tfNameRegisterContent,
-                    binding.tfEmailRegisterContent,
-                    binding.tfPasswordRegisterContent,
-                    binding.tfPasswordConfirmRegisterContent,
-                    binding.tfOptionsUserTypeRegister
-                ),
-                this
-            )
+            CommonFunctions.clearFocusFromAllFields(inputFields, this)
             false
         }
 
@@ -140,7 +142,12 @@ class RegisterActivity : AppCompatActivity() {
         binding.progressBarRegister.visibility = ProgressBar.VISIBLE
 
         //Register in firebase
-        userRepository.registerUser(name, email, userTypeSelected!!, password) { success, message ->
+        userRegisterRepository.registerUser(
+            name,
+            email,
+            userTypeSelected!!,
+            password
+        ) { success, message ->
             binding.progressBarRegister.visibility = ProgressBar.GONE
 
             if (success) {
