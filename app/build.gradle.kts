@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -20,6 +21,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -57,4 +59,9 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.google.firebase.auth.ktx)
     implementation(libs.firebase.messaging.ktx)
+    //password encryption dependencies
+    implementation(libs.bcrypt)
+    //async functions dependencies
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }

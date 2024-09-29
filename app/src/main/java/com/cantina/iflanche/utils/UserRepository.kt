@@ -3,6 +3,11 @@ package com.cantina.iflanche.utils
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class UserRepository(private val context: Context) {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -15,50 +20,58 @@ class UserRepository(private val context: Context) {
         password: String,
         callback: (Boolean, String?) -> Unit
     ) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.let {
-                        saveUserInDatabase(
-                            it.uid,
-                            name,
-                            email,
-                            userType,
-                            password
-                        ) { success, message ->
-                            callback(success, message)
-                        }
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val authResult = auth.createUserWithEmailAndPassword(email, password).await()
+                val user = authResult.user
+                user?.let {
+                    val hashedPassword = PasswordUtils.hashPassword(password)
+                    saveUserInDatabase(
+                        it.uid,
+                        name,
+                        email,
+                        userType,
+                        hashedPassword
+                    ) { success, message ->
+                        callback(success, message)
                     }
-                } else {
-                    callback(false, task.exception?.message)
+                } ?: run {
+                    callback(false, "User registration failed")
                 }
+            } catch (e: Exception) {
+                callback(false, e.message)
             }
+        }
     }
+
 
     private fun saveUserInDatabase(
         userId: String,
         name: String,
         email: String,
         userType: String,
-        password: String,
+        hashedPassword: String,
         callback: (Boolean, String?) -> Unit
     ) {
-        val userMap = mapOf(
-            "name" to name,
-            "email" to email,
-            "userType" to userType,
-            "password" to password,
-        )
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userMap = mapOf(
+                    "name" to name,
+                    "email" to email,
+                    "userType" to userType,
+                    "password" to hashedPassword,
+                )
 
-        val databaseReference = database.getReference("users").child(userId)
-        databaseReference.setValue(userMap)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                val databaseReference = database.getReference("users").child(userId)
+                databaseReference.setValue(userMap).await()
+                withContext(Dispatchers.Main) {
                     callback(true, "User data saved successfully")
-                } else {
-                    callback(false, task.exception?.message)
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    callback(false, e.message)
                 }
             }
+        }
     }
 }
