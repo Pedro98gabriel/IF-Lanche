@@ -152,6 +152,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if (success) {
                 Toast.makeText(this, "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show()
+                clearInputFields()
             } else {
                 if (message?.contains("email address is already in use") == true) {
                     binding.tfEmailRegister.error = "Email já cadastrado"
@@ -160,5 +161,14 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun clearInputFields() {
+        binding.tfNameRegisterContent.text?.clear()
+        binding.tfEmailRegisterContent.text?.clear()
+        binding.tfPasswordRegisterContent.text?.clear()
+        binding.tfPasswordConfirmRegisterContent.text?.clear()
+        binding.tfOptionsUserTypeRegister.text?.clear()
+        userTypeSelected = null
     }
 }
