@@ -61,6 +61,7 @@ class RegisterActivity : AppCompatActivity() {
             false
         }
 
+        // Adiciona listeners para limpar erros no campo selecionado
         CommonFunctions.addTextWatcherAndFocusListener(
             binding.tfNameRegisterContent,
             binding.tfNameRegister
@@ -77,10 +78,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.tfPasswordConfirmRegisterContent,
             binding.tfPasswordConfirmRegister
         )
-        CommonFunctions.addTextWatcherAndFocusListener(
-            binding.tfOptionsUserTypeRegister,
-            binding.tfDropdownUserTypeRegister
-        )
+        //Hide keyboard and clear error message when gaining focus
         binding.tfOptionsUserTypeRegister.onFocusChangeListener =
             View.OnFocusChangeListener { view, hasFocus ->
                 if (hasFocus) {
