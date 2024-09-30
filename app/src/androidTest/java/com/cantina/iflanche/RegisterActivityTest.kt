@@ -26,62 +26,45 @@ class RegisterActivityTest {
     val activityRule = ActivityTestRule(RegisterActivity::class.java)
 
     @Test
-    fun shouldShowAndHideErrorOnNameField() {
-        // Click the register button to trigger the error
+    fun shouldFailWhenAllFieldsAreEmpty() {
+        // Click the register button to trigger validation
         onView(withId(R.id.btn_register)).perform(click())
+
+        // Verify that all error messages are displayed
         checkTextInputLayoutError(R.id.tf_name_register, "Por favor, preencha o nome")
-
-        // Click on the name field to remove the error
-        onView(withId(R.id.tf_name_register)).perform(click())
-        checkTextInputLayoutError(R.id.tf_name_register, null)
-    }
-
-    @Test
-    fun shouldShowAndHideErrorOnEmailField() {
-        // Click the register button to trigger the error
-        onView(withId(R.id.btn_register)).perform(click())
         checkTextInputLayoutError(R.id.tf_email_register, "Email inválido")
-
-        // Click on the name field to remove the error
-        onView(withId(R.id.tf_email_register)).perform(click())
-        checkTextInputLayoutError(R.id.tf_email_register, null)
-    }
-
-    @Test
-    fun shouldShowAndHideErrorOnUserTypeField() {
-        // Click the register button to trigger the error
-        onView(withId(R.id.btn_register)).perform(click())
+        checkTextInputLayoutError(
+            R.id.tf_password_register,
+            "A senha deve ter pelo menos 6 caracteres"
+        )
+        checkTextInputLayoutError(R.id.tf_password_confirm_register, "As senhas não coincidem")
         checkTextInputLayoutError(
             R.id.tf_dropdown_user_type_register,
             "Selecione um tipo de usuário"
         )
+    }
+
+    @Test
+    fun shouldHideErrorOnFieldClick() {
+        // Click the register button to trigger the error
+        onView(withId(R.id.btn_register)).perform(click())
 
         // Click on the name field to remove the error
+        onView(withId(R.id.tf_name_register)).perform(click())
+        checkTextInputLayoutError(R.id.tf_name_register, null)
+
+        onView(withId(R.id.tf_email_register)).perform(click())
+        checkTextInputLayoutError(R.id.tf_email_register, null)
+
         onView(withId(R.id.tf_dropdown_user_type_register)).perform(click())
         checkTextInputLayoutError(R.id.tf_dropdown_user_type_register, null)
-    }
+        // Click again but do not select anything
+        onView(withId(R.id.tf_dropdown_user_type_register)).perform(click())
 
-    @Test
-    fun shouldShowAndHideErrorOnPasswordField() {
-        // Click the register button to trigger the error
-        onView(withId(R.id.btn_register)).perform(click())
-        checkTextInputLayoutError(
-            R.id.tf_password_register, "A senha deve ter pelo menos 6 caracteres"
-        )
-        // Click on the name field to remove the error
-        onView(withId(R.id.tf_password_register)).perform(click())
+        onView(withId(R.id.tf_password_register)).perform(scrollTo(), click())
         checkTextInputLayoutError(R.id.tf_password_register, null)
-    }
 
-    @Test
-    fun shouldShowAndHideErrorOnConfirmPasswordField() {
-        // Click the register button to trigger the error
-        onView(withId(R.id.btn_register)).perform(click())
-        checkTextInputLayoutError(
-            R.id.tf_password_confirm_register, "As senhas não coincidem"
-        )
-        // Click on the name field to remove the error
-        onView(withId(R.id.tf_password_confirm_register)).perform(click())
+        onView(withId(R.id.tf_password_confirm_register)).perform(scrollTo(), click())
         checkTextInputLayoutError(R.id.tf_password_confirm_register, null)
     }
 
@@ -119,7 +102,7 @@ class RegisterActivityTest {
         // Verify that the activity is finished
         assert(activityRule.activity.isFinishing)
     }
-    
+
     @Test
     fun shouldRegisterSuccessfully() {
         // Fill in the registration form
