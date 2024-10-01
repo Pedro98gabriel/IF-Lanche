@@ -49,17 +49,14 @@ class RegisterActivityTest {
         // Click the register button to trigger the error
         onView(withId(R.id.btn_register)).perform(click())
 
-        // Click on the name field to remove the error
         onView(withId(R.id.tf_name_register)).perform(click())
         checkTextInputLayoutError(R.id.tf_name_register, null)
 
-        onView(withId(R.id.tf_email_register)).perform(click())
-        checkTextInputLayoutError(R.id.tf_email_register, null)
-
         onView(withId(R.id.tf_dropdown_user_type_register)).perform(click())
         checkTextInputLayoutError(R.id.tf_dropdown_user_type_register, null)
-        // Click again but do not select anything
-        onView(withId(R.id.tf_dropdown_user_type_register)).perform(click())
+
+        onView(withId(R.id.tf_email_register)).perform(click())
+        checkTextInputLayoutError(R.id.tf_email_register, null)
 
         onView(withId(R.id.tf_password_register)).perform(scrollTo(), click())
         checkTextInputLayoutError(R.id.tf_password_register, null)
@@ -126,10 +123,30 @@ class RegisterActivityTest {
         // Fill in the registration form with an invalid email
         onView(withId(R.id.tf_name_register_content)).perform(typeText("John Doe"))
         onView(withId(R.id.tf_email_register_content)).perform(typeText("invalid-email"))
+        onView(withId(R.id.tf_options_user_type_register)).perform(click())
+        onView(withText("Aluno")).inRoot(isPlatformPopup()).perform(click())
         onView(withId(R.id.tf_password_register_content)).perform(typeText("password123"))
         onView(withId(R.id.tf_password_confirm_register_content)).perform(
             scrollTo(),
             typeText("password123")
+        )
+
+        // Click the register button to trigger validation
+        onView(withId(R.id.btn_register)).perform(scrollTo(), click())
+
+        // Verify that the email error message is displayed
+        checkTextInputLayoutError(R.id.tf_email_register, "Email inválido")
+    }
+
+    @Test
+    fun shouldFailWhenPasswordsDoNotMatch() {
+        // Fill in the registration form with mismatched passwords
+        onView(withId(R.id.tf_name_register_content)).perform(typeText("John Doe"))
+        onView(withId(R.id.tf_email_register_content)).perform(typeText("john.doe@example.com"))
+        onView(withId(R.id.tf_password_register_content)).perform(typeText("password123"))
+        onView(withId(R.id.tf_password_confirm_register_content)).perform(
+            scrollTo(),
+            typeText("mismatchPassword")
         )
         onView(withId(R.id.tf_options_user_type_register)).perform(click())
         onView(withText("Aluno")).inRoot(isPlatformPopup()).perform(click())
@@ -137,7 +154,34 @@ class RegisterActivityTest {
         // Click the register button to trigger validation
         onView(withId(R.id.btn_register)).perform(click())
 
-        // Verify that the email error message is displayed
-        checkTextInputLayoutError(R.id.tf_email_register, "Email inválido")
+        // Verify that the confirm password error message is displayed
+        checkTextInputLayoutError(
+            R.id.tf_password_confirm_register,
+            "As senhas não coincidem"
+        )
     }
+
+    @Test
+    fun shouldFailWhenPasswordIsTooShort() {
+        // Fill in the registration form with a short password
+        onView(withId(R.id.tf_name_register_content)).perform(typeText("John Doe"))
+        onView(withId(R.id.tf_email_register_content)).perform(typeText("john.doe@example.com"))
+        onView(withId(R.id.tf_password_register_content)).perform(typeText("123"))
+        onView(withId(R.id.tf_password_confirm_register_content)).perform(
+            scrollTo(),
+            typeText("123")
+        )
+        onView(withId(R.id.tf_options_user_type_register)).perform(click())
+        onView(withText("Funcionário")).inRoot(isPlatformPopup()).perform(click())
+
+        // Click the register button to trigger validation
+        onView(withId(R.id.btn_register)).perform(click())
+
+        // Verify that the password error message is displayed
+        checkTextInputLayoutError(
+            R.id.tf_password_register,
+            "A senha deve ter pelo menos 6 caracteres"
+        )
+    }
+
 }
