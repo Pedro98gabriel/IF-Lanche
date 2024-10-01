@@ -61,23 +61,17 @@ class RegisterActivity : AppCompatActivity() {
             false
         }
 
-        // Adiciona listeners para limpar erros no campo selecionado
+        // Adds TextWatcher and FocusChangeListener to multiple input fields to clear error messages
+        // when the text changes or the field gains focus.
         CommonFunctions.addTextWatcherAndFocusListener(
-            binding.tfNameRegisterContent,
-            binding.tfNameRegister
+            listOf(
+                binding.tfNameRegisterContent to binding.tfNameRegister,
+                binding.tfEmailRegisterContent to binding.tfEmailRegister,
+                binding.tfPasswordRegisterContent to binding.tfPasswordRegister,
+                binding.tfPasswordConfirmRegisterContent to binding.tfPasswordConfirmRegister,
+            )
         )
-        CommonFunctions.addTextWatcherAndFocusListener(
-            binding.tfEmailRegisterContent,
-            binding.tfEmailRegister
-        )
-        CommonFunctions.addTextWatcherAndFocusListener(
-            binding.tfPasswordRegisterContent,
-            binding.tfPasswordRegister
-        )
-        CommonFunctions.addTextWatcherAndFocusListener(
-            binding.tfPasswordConfirmRegisterContent,
-            binding.tfPasswordConfirmRegister
-        )
+
         //Hide keyboard and clear error message when gaining focus
         binding.tfOptionsUserTypeRegister.onFocusChangeListener =
             View.OnFocusChangeListener { view, hasFocus ->
