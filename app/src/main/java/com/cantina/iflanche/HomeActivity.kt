@@ -14,5 +14,14 @@ class HomeActivity : AppCompatActivity() {
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userType = intent.getStringExtra("userType")
+        if (userType == "Administrador") {
+            // Mostrar elementos específicos para administradores
+            binding.testUserType.text = "Sou um administrador"
+        } else {
+            // Ocultar elementos específicos para administradores
+            binding.testUserType.text = "Sou um usuario comum"
+        }
+
     }
 }
