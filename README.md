@@ -1,13 +1,11 @@
 # IF-Lanche(em construção)
----
+
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_login.png" width="250" /> _
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_cadastro.png" width="250" /> _
 
----
 ## Sobre o projeto
 Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas no IFPR, Campus Telêmaco Borba. O objetivo do aplicativo é facilitar a visualização dos itens disponíveis no cardápio da cantina do campus, oferecendo aos usuários uma forma rápida de acessar essas informações.
 
----
 ## Funcionalidades
 - **Visualização do Cardápio:** Usuários podem acessar e visualizar os itens disponíveis na cantina.
 
@@ -15,14 +13,12 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
 
 - **Gerenciamento de Itens:** Permite que os funcionários realizem o cadastro, edição e exclusão (CRUD) dos itens disponíveis.
 
----
 ## Tecnologias Utilizadas
 - **Linguagem:** Kotlin
 - **Plataforma:** Android
 - **Banco de Dados:** Firebase
 - **IDE:** Android Studio
   
----
 ## Como rodar
 
 #### Pré-requisitos
@@ -39,7 +35,6 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
 
 ```
 $ git clone https://github.com/Pedro98gabriel/IF-Lanche.git
-
 ```
 
 #### Configurando o Firebase
@@ -76,13 +71,9 @@ Para utilizar o Firebase em seu projeto, siga os passos abaixo:
 
 Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo.
 
-
 #### Executando o projeto
 1. Abra o Android Studio e selecione "Open an existing Android Studio project".
 2. Navegue até a pasta onde você clonou o repositório.
 3. Aguarde o Gradle sincronizar.
 4. Conecte um dispositivo Android ou inicie um emulador.
 5. Clique em "Run" para compilar e executar o aplicativo.
-
----
-
