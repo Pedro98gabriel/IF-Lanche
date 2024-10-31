@@ -3,17 +3,17 @@
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_login.png" width="250" /> _
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_cadastro.png" width="250" /> _
 
-## Sobre o projeto
+## Sobre o projeto:
 Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas no IFPR, Campus Telêmaco Borba. O objetivo do aplicativo é facilitar a visualização dos itens disponíveis no cardápio da cantina do campus, oferecendo aos usuários uma forma rápida de acessar essas informações.
 
-## Funcionalidades
+## Funcionalidades:
 - **Visualização do Cardápio:** Usuários podem acessar e visualizar os itens disponíveis na cantina.
 
 - **Cadastro de Usuários:** Permite que novos usuários se cadastrem no aplicativo.
 
 - **Gerenciamento de Itens:** Permite que os funcionários realizem o cadastro, edição e exclusão (CRUD) dos itens disponíveis.
 
-## Tecnologias Utilizadas
+## Tecnologias Utilizadas:
 - **Linguagem:** Kotlin
 - **Plataforma:** Android
 - **Banco de Dados:** Firebase
@@ -21,7 +21,7 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
   
 ## Como rodar
 
-#### Pré-requisitos
+#### Pré-requisitos:
 
 - **Ambiente de Desenvolvimento:** É recomendável usar o Android Studio para compilar e executar o aplicativo, mas você pode utilizar outra IDE compatível com desenvolvimento Android, como IntelliJ IDEA ou Eclipse, desde que tenha as configurações necessárias.
 
@@ -31,13 +31,13 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
 
 ### Instalando
 
-**Clonando o repositório**
+**Clonando o repositório:**
 
 ```
 $ git clone https://github.com/Pedro98gabriel/IF-Lanche.git
 ```
 
-#### Configurando o Firebase
+#### Configurando o Firebase:
 
 Para utilizar o Firebase em seu projeto, siga os passos abaixo:
 
@@ -71,7 +71,7 @@ Para utilizar o Firebase em seu projeto, siga os passos abaixo:
 
 Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo.
 
-#### Executando o projeto
+#### Executando o projeto:
 1. Abra o Android Studio e selecione "Open an existing Android Studio project".
 2. Navegue até a pasta onde você clonou o repositório.
 3. Aguarde o Gradle sincronizar.
