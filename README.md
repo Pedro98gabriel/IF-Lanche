@@ -1,4 +1,4 @@
-# IF-Lanche(em construção)
+# IF-Lanche (Em Construção)
 
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_login.png" width="250" /> _
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_cadastro.png" width="250" /> _
@@ -64,18 +64,17 @@ Para utilizar o Firebase em seu projeto, siga os passos abaixo:
    - No menu lateral, clique em "Cloud Messaging".
    - Siga as instruções para configurar o envio de notificações push.
 
-6. **Adicionar o SDK do Firebase ao seu aplicativo:**
-   - Siga as instruções no Firebase Console para adicionar as dependências necessárias ao seu projeto Android (no arquivo `build.gradle`).
-
-7. **Baixar o arquivo `google-services.json`:**
+6. **Baixar o arquivo `google-services.json`:**
    - No painel de configurações do projeto, clique em "Adicionar aplicativo" e siga as instruções.
    - Baixe o arquivo `google-services.json` e coloque-o na pasta `app/` do seu projeto.
 
-Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo.
+Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo, em caso de dúvidas a [documentação](https://firebase.google.com/docs/android/setup?hl=pt) poderá ser consultada.
 
-#### Executando o projeto:
-1. Abra o Android Studio e selecione "Open".
-2. Navegue até a pasta onde você clonou o repositório.
-3. Aguarde o Gradle sincronizar.
+#### Configurações Adicionais:
+Para que o aplicativo funcione corretamente, você precisa adicionar uma configuração no arquivo `local.properties` do seu projeto. 
+
+1. Abra o arquivo ``local.properties``, localizado na pasta ``Gradle Scripts``.
+2. Adicione a seguinte linha, substituindo `YOUR_SALT_VALUE` pelo valor desejado para o salt do bcrypt: ``BCRYPT_SALT=YOUR_SALT_VALUE``
+3. Salve o arquivo.
 4. Conecte um dispositivo Android ou inicie um emulador.
 5. Clique em "Run" para compilar e executar o aplicativo.
