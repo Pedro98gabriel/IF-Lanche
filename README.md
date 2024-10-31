@@ -29,7 +29,7 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
 
 - **Hardware:** Um computador que atenda aos requisitos mínimos para rodar projetos no Android Studio ou em sua IDE escolhida.
 
-#### Instalando
+### Instalando
 
 **Clonando o repositório**
 
