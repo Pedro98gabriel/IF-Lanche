@@ -27,6 +27,8 @@ Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de
 
 - **Java Development Kit (JDK):** É necessário ter o JDK instalado. A versão recomendada é a JDK 21 ou superior.
 
+- **Git:** O Git deve estar instalado na sua máquina para clonar o repositório. Você pode baixá-lo clicando [aqui](https://git-scm.com/).
+
 - **Hardware:** Um computador que atenda aos requisitos mínimos para rodar projetos no Android Studio ou em sua IDE escolhida.
 
 ### Instalando
