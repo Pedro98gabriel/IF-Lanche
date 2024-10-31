@@ -74,7 +74,7 @@ Para utilizar o Firebase em seu projeto, siga os passos abaixo:
 Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo.
 
 #### Executando o projeto:
-1. Abra o Android Studio e selecione "Open an existing Android Studio project".
+1. Abra o Android Studio e selecione "Open".
 2. Navegue até a pasta onde você clonou o repositório.
 3. Aguarde o Gradle sincronizar.
 4. Conecte um dispositivo Android ou inicie um emulador.
