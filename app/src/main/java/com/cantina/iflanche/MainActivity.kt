@@ -17,6 +17,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //start the activity automaticcaly for test purposes
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("userType", "Aluno") // Pass any required data
+        startActivity(intent)
+        finish() // Close MainActivity
+        //finish test activity
+
         userLoginRepository = UserLoginRepository(this)
 
         redirectToRegisterScreen(binding)
@@ -35,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnEnterLogin.setOnClickListener {
             val email = binding.tfEmailLoginContent.text.toString().trim()
             val password = binding.tfPasswordLoginContent.text.toString().trim()
-
 
             if (email.isEmpty() || !CommonFunctions.isValidEmail(email)) {
                 binding.tfEmailLogin.error = "Email inválido"
