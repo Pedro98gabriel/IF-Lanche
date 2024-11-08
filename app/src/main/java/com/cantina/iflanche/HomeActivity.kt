@@ -9,9 +9,11 @@ import com.cantina.iflanche.databinding.ActivityHomeBinding
 import com.cantina.iflanche.databinding.ActivityMainBinding
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val userType = intent.getStringExtra("userType")
