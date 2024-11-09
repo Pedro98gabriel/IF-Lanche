@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.utils.UserRegisterRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
+import com.cantina.iflanche.utils.CommonFunctions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 

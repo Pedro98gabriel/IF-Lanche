@@ -1,4 +1,4 @@
-package com.cantina.iflanche
+package com.cantina.iflanche.utils
 
 import android.content.Context
 import android.text.Editable
