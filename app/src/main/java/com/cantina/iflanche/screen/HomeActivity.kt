@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.ActivityHomeBinding
-import com.cantina.iflanche.utils.configureAppBar
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
