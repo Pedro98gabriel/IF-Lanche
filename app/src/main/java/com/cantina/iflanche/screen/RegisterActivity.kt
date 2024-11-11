@@ -1,4 +1,4 @@
-package com.cantina.iflanche
+package com.cantina.iflanche.screen
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cantina.iflanche.R
 import com.cantina.iflanche.firebase.UserRegisterRepository
 import com.cantina.iflanche.databinding.ActivityRegisterBinding
 import com.cantina.iflanche.utils.CommonFunctions

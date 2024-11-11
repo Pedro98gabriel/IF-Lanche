@@ -1,4 +1,4 @@
-package com.cantina.iflanche
+package com.cantina.iflanche.screen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
