@@ -1,0 +1,5 @@
+<resources>
+    <style name="LineDrawerSeparator" parent="Base.Theme.AppCompat">
+        <item name="android:listDivider">@color/dark_grey</item>
+    </style>
+</resources>
