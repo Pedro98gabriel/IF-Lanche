@@ -1,4 +1,4 @@
-package com.cantina.iflanche.utils
+package com.cantina.iflanche.firebase
 
 import android.content.Context
 import android.content.Intent

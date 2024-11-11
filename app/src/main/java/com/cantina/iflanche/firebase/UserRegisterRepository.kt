@@ -1,6 +1,7 @@
-package com.cantina.iflanche.utils
+package com.cantina.iflanche.firebase
 
 import android.content.Context
+import com.cantina.iflanche.utils.PasswordUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
