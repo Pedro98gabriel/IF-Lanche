@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         //start the activity automaticcaly for test purposes
         val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra("userType", "Aluno") // Pass any required data
+        intent.putExtra("userType", "Administrador") // Pass any required data
         startActivity(intent)
         finish() // Close MainActivity
         //finish test activity

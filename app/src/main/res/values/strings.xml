@@ -13,4 +13,6 @@
     <string name="user_type">Tipo de usuário</string>
     <string name="confirm_password">Confirmar senha</string>
     <string name="arrow_back_description">Voltar para tela de login</string>
+    <string name="drawer_open">Abrir drawer</string>
+    <string name="drawer_close">Fechar drawer</string>
 </resources>
