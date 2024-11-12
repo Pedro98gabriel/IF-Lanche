@@ -10,8 +10,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastrar:"
+        android:text="Opções:"
         android:textColor="@color/black_variant"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
 </LinearLayout>

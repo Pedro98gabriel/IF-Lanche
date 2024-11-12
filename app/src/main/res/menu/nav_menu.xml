@@ -4,13 +4,16 @@
         android:id="@+id/group_feature"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/navdrawer_item_product"
+            android:id="@+id/nav_home"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_product"
             android:title="Produto" />
         <item
-            android:id="@+id/navdrawer_item_category"
+            android:id="@+id/nav_category"
             android:title="Categoria" />
         <item
-            android:id="@+id/navdrawer_item_subcategory"
+            android:id="@+id/nav_subcategory"
             android:title="Subcategoria" />
 
     </group>
@@ -18,7 +21,8 @@
         android:id="@+id/group_exit"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/exit"
+            android:id="@+id/nav_exit"
+            android:checkable="false"
             android:title="Sair" />
 
 
