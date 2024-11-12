@@ -1,4 +1,4 @@
-package com.cantina.iflanche.screen.fragments
+package com.cantina.iflanche.screen.fragments.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SubCaregoryFragment.newInstance] factory method to
+ * Use the [CategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SubCaregoryFragment : Fragment() {
+class CategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class SubCaregoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_sub_category, container, false)
+        return inflater.inflate(R.layout.fragment_register_category, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class SubCaregoryFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterSubCaregoryFragment.
+         * @return A new instance of fragment RegisterCaregoryFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SubCaregoryFragment().apply {
+            CategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
