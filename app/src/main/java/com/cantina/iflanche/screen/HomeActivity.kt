@@ -8,6 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.ActivityHomeBinding
+import com.cantina.iflanche.screen.fragments.CategoryFragment
+import com.cantina.iflanche.screen.fragments.HomeFragment
+import com.cantina.iflanche.screen.fragments.ProductFragment
+import com.cantina.iflanche.screen.fragments.SubCaregoryFragment
+import com.google.android.material.navigation.NavigationView
+
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -21,6 +27,48 @@ class HomeActivity : AppCompatActivity() {
         setAppBarTitle("IF-Lanche")
 
         val toolbar: Toolbar = binding.toolbar
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    setAppBarTitle("IF-Lanche")
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, HomeFragment())
+                        .commit()
+                }
+
+                R.id.nav_product -> {
+                    setAppBarTitle("Cadastrar Produto")
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ProductFragment())
+                        .commit()
+                }
+
+                R.id.nav_category -> {
+                    setAppBarTitle("Cadastrar Categoria")
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, CategoryFragment())
+                        .commit()
+                }
+
+                R.id.nav_subcategory -> {
+                    setAppBarTitle("Cadastrar Subcategoria")
+
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.fragment_container,
+                            SubCaregoryFragment()
+                        )
+                        .commit()
+                }
+
+                R.id.nav_exit -> {
+                    Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
+                }
+            }
+            binding.drawerLayout.closeDrawers()
+            true
+        }
 
         appBarNotificationIcon()
 
@@ -33,6 +81,14 @@ class HomeActivity : AppCompatActivity() {
         )
         binding.drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
+
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, HomeFragment()).commit()
+            navigationView.setCheckedItem(R.id.nav_home)
+        }
+
 
         val userType = intent.getStringExtra("userType") ?: "Aluno"
 
