@@ -16,7 +16,9 @@ object LoadCategories {
                 val categories = mutableListOf<String>()
                 for (categorySnapshot in snapshot.children) {
                     val category = categorySnapshot.getValue(String::class.java)
-                    category?.let { categories.add(it) }
+                    category?.let {
+                        categories.add(category.replaceFirstChar { it.uppercaseChar() })
+                    }
                 }
                 callback(categories)
             }
