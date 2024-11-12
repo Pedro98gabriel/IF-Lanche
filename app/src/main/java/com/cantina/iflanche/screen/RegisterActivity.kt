@@ -151,6 +151,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (message?.contains("email address is already in use") == true) {
                     binding.tfEmailRegister.error = "Email já cadastrado"
                 } else {
+                    binding.progressBarRegister.visibility = ProgressBar.GONE
                     Toast.makeText(this, "Cadastro falhou: $message", Toast.LENGTH_SHORT).show()
                 }
             }
