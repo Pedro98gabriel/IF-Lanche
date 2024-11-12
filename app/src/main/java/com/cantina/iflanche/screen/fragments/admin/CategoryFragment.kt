@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentRegisterCategoryBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class CategoryFragment : Fragment() {
@@ -27,7 +28,12 @@ class CategoryFragment : Fragment() {
         val view = binding.root
 
         val btnAddNewCategory = binding.fabAddCategory
+        goToAddCategoryScreen(btnAddNewCategory)
 
+        return view
+    }
+
+    private fun goToAddCategoryScreen(btnAddNewCategory: FloatingActionButton) {
         btnAddNewCategory.setOnClickListener {
             val addCategoryFragment = AddCategoryFragment()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -35,8 +41,6 @@ class CategoryFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
-
-        return view
     }
 
 
