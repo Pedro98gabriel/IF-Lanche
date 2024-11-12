@@ -98,7 +98,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             R.id.nav_category_admin -> {
-                setAppBarTitle("Cadastrar Categoria")
+                setAppBarTitle("Gerenciar Categoria")
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, CategoryFragment())
                     .commit()
