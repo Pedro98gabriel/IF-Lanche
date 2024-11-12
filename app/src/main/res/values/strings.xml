@@ -15,4 +15,8 @@
     <string name="arrow_back_description">Voltar para tela de login</string>
     <string name="drawer_open">Abrir drawer</string>
     <string name="drawer_close">Fechar drawer</string>
+    <string name="category_text">Categoria</string>
+    <string name="edit_category_text">Editar</string>
+    <string name="remove_category_text">Remover</string>
+    <string name="save_category_text">Salvar</string>
 </resources>
