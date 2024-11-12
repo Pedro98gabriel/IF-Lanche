@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_feature_student"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_student"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_profile_student"
+            android:title="Perfil" />
+        <item
+            android:id="@+id/nav_config_student"
+            android:title="Configurações" />
+
+    </group>
+    <group
+        android:id="@+id/group_exit_student"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_exit_student"
+            android:checkable="false"
+            android:title="Sair" />
+
+
+    </group>
+</menu>

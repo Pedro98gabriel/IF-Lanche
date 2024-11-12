@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_feature_admin"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home_admin"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_product_admin"
+            android:title="Produto" />
+        <item
+            android:id="@+id/nav_category_admin"
+            android:title="Categoria" />
+        <item
+            android:id="@+id/nav_subcategory_admin"
+            android:title="Subcategoria" />
+
+    </group>
+    <group
+        android:id="@+id/group_exit_admin"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_exit_admin"
+            android:checkable="false"
+            android:title="Sair" />
+
+
+    </group>
+</menu>
