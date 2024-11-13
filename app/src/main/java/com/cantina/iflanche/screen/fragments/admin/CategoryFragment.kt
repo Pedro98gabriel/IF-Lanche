@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentRegisterCategoryBinding
+import com.cantina.iflanche.firebase.DeleteCategory
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.screen.HomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -44,6 +46,18 @@ class CategoryFragment : Fragment() {
 
         goToAddCategoryScreen(btnAddNewCategory)
 
+        deleteSelectedItem(btnDeleteCategory)
+
+        if (categories.isNotEmpty()) {
+            setupCategoryAdapter(categories)
+        } else {
+            loadCategories()
+        }
+
+        return view
+    }
+
+    private fun deleteSelectedItem(btnDeleteCategory: Button) {
         btnDeleteCategory.setOnClickListener {
             selectedCategory = binding.tfOptionsCategorySelect.text.toString()
             if (selectedCategory!!.isNotEmpty()) {
@@ -53,17 +67,7 @@ class CategoryFragment : Fragment() {
                 binding.tfDropdownCategorySelect.error = "Selecione uma categoria para apagar"
 
             }
-
-
         }
-
-        if (categories.isNotEmpty()) {
-            setupCategoryAdapter(categories)
-        } else {
-            loadCategories()
-        }
-
-        return view
     }
 
     override fun onDestroyView() {
@@ -156,10 +160,25 @@ class CategoryFragment : Fragment() {
             .setTitle("Apagar")
             .setMessage("A categoria \"$categorySelected\" será apagada, deseja continuar?")
             .setNegativeButton("Não") { dialog, which ->
-                // Respond to negative button press
             }
             .setPositiveButton("Sim") { dialog, which ->
-                // Respond to positive button press
+                DeleteCategory.deleteCategory(
+                    categorySelected,
+                    onSuccess = {
+                        Toast.makeText(
+                            requireContext(),
+                            "Categoria removida com sucesso",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.tfOptionsCategorySelect.setText("")
+                        binding.tfOptionsCategorySelect.clearFocus()
+
+
+                    },
+                    onError = { errorMessage ->
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
             .show()
     }
