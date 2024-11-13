@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentAddCategoryBinding
 import com.cantina.iflanche.screen.HomeActivity
 import com.cantina.iflanche.utils.CommonFunctions
@@ -152,6 +153,7 @@ class AddCategoryFragment : Fragment() {
                                             Toast.LENGTH_SHORT
                                         ).show()
                                         binding.tfAddCategoryContent.text?.clear()
+                                        requireActivity().supportFragmentManager.popBackStack()
                                     } else {
                                         Toast.makeText(
                                             activity,
