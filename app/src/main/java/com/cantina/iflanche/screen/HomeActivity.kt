@@ -7,56 +7,53 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.ActivityHomeBinding
-import com.cantina.iflanche.screen.fragments.admin.CategoryFragment
+import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.screen.fragments.HomeFragment
+import com.cantina.iflanche.screen.fragments.admin.CategoryFragment
 import com.cantina.iflanche.screen.fragments.admin.ProductFragment
-import com.cantina.iflanche.screen.fragments.admin.SubCaregoryFragment
+import com.cantina.iflanche.screen.fragments.admin.SubcategoryFragment
 import com.cantina.iflanche.screen.fragments.student.ConfigStudentFragment
 import com.cantina.iflanche.screen.fragments.student.ProfileStudentFragment
-import com.google.android.material.navigation.NavigationView
-
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var drawerToggle: ActionBarDrawerToggle
+    var categories: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val userType = intent.getStringExtra("userType") ?: "Aluno"
-        if (userType == "Aluno") {
-            Toast.makeText(this, "Logado como aluno", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Logado como Administrador", Toast.LENGTH_SHORT).show()
-        }
+        loadCategories()
+        appBarNotificationIcon()
 
         val toolbar: Toolbar = binding.toolbar
+        val userType = intent.getStringExtra("userType") ?: "Aluno"
 
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        // Configura o menu de navegação de acordo com o tipo de usuário
+        val navigationView = binding.navView
         if (userType == "Aluno") {
             navigationView.inflateMenu(R.menu.nav_menu_student)
         } else {
             navigationView.inflateMenu(R.menu.nav_menu_admin)
         }
 
+        // Configura o listener para o menu de navegação
         navigationView.setNavigationItemSelectedListener { item ->
-
             if (userType == "Aluno") {
                 drawerMenuItemStudent(item)
             } else {
                 drawerMenuItemAdmin(item)
             }
 
-            binding.drawerLayout.closeDrawers()
+            binding.drawerLayout.closeDrawers() // Fecha o menu após a seleção
             true
         }
 
-        appBarNotificationIcon()
-
+        // Configura o botão de navegação lateral (hamburguer)
         drawerToggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -79,41 +76,46 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        // Sempre carrega o HomeFragment para "Aluno" e "Admin"
+        if (savedInstanceState == null) {
+            loadFragment(HomeFragment(), "IF-Lanche")
+            // Marca o item correto como selecionado com base no tipo de usuário
+            if (userType == "Aluno") {
+                navigationView.setCheckedItem(R.id.nav_home_student)  // Marca "Home" de Aluno como selecionado
+            } else {
+                navigationView.setCheckedItem(R.id.nav_home_admin)  // Marca "Home" de Admin como selecionado
+            }
+        }
+
+    }
+
+    private fun loadCategories() {
+        LoadCategories.loadCategories(
+            callback = { categories ->
+                this.categories = categories
+            },
+            onError = { errorMessage ->
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    private fun loadFragment(fragment: Fragment, title: String) {
+        setAppBarTitle(title)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     private fun drawerMenuItemAdmin(item: MenuItem) {
         when (item.itemId) {
-            R.id.nav_home_admin -> {
-                setAppBarTitle("IF-Lanche")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment())
-                    .commit()
-            }
-
-            R.id.nav_product_admin -> {
-                setAppBarTitle("Cadastrar Produto")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ProductFragment())
-                    .commit()
-            }
-
-            R.id.nav_category_admin -> {
-                setAppBarTitle("Gerenciar Categoria")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, CategoryFragment())
-                    .commit()
-            }
-
-            R.id.nav_subcategory_admin -> {
-                setAppBarTitle("Cadastrar Subcategoria")
-
-                supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.fragment_container,
-                        SubCaregoryFragment()
-                    )
-                    .commit()
-            }
+            R.id.nav_home_admin -> loadFragment(HomeFragment(), "IF-Lanche")
+            R.id.nav_product_admin -> loadFragment(ProductFragment(), "Cadastrar Produto")
+            R.id.nav_category_admin -> loadFragment(CategoryFragment(), "Gerenciar Categoria")
+            R.id.nav_subcategory_admin -> loadFragment(
+                SubcategoryFragment(),
+                "Cadastrar Subcategoria"
+            )
 
             R.id.nav_exit_admin -> {
                 Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
@@ -123,27 +125,9 @@ class HomeActivity : AppCompatActivity() {
 
     private fun drawerMenuItemStudent(item: MenuItem) {
         when (item.itemId) {
-            R.id.nav_home_student -> {
-                setAppBarTitle("IF-Lanche")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment())
-                    .commit()
-            }
-
-            R.id.nav_profile_student -> {
-                setAppBarTitle("Perfil de Usuário")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ProfileStudentFragment())
-                    .commit()
-            }
-
-            R.id.nav_config_student -> {
-                setAppBarTitle("Configurações")
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, ConfigStudentFragment())
-                    .commit()
-            }
-
+            R.id.nav_home_student -> loadFragment(HomeFragment(), "IF-Lanche")
+            R.id.nav_profile_student -> loadFragment(ProfileStudentFragment(), "Perfil de Usuário")
+            R.id.nav_config_student -> loadFragment(ConfigStudentFragment(), "Configurações")
             R.id.nav_exit_student -> {
                 Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
             }
@@ -161,4 +145,5 @@ class HomeActivity : AppCompatActivity() {
             Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
