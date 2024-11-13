@@ -29,42 +29,42 @@ class SubcategoryFragment : Fragment() {
         val view = binding.root
 
 
-            loadDropdownItems()
+        loadDropdownItems()
 
 
-            binding.btnEditSubcategory.setOnClickListener {
-                val fragment = AddSubCategoryFragment()
+        binding.btnEditSubcategory.setOnClickListener {
+            val fragment = AddSubCategoryFragment()
 
-                selectedSubCategory = binding.tfOptionsSubcategorySelect.text.toString()
+            selectedSubCategory = binding.tfOptionsSubcategorySelect.text.toString()
 
-                // Cria um bundle com o nome da categoria
-                val bundle = Bundle()
-                bundle.putString("subCategoryName", selectedSubCategory)
-                fragment.arguments = bundle
+            // Cria um bundle com o nome da categoria
+            val bundle = Bundle()
+            bundle.putString("subCategoryName", selectedSubCategory)
+            fragment.arguments = bundle
 
-                // Substitui o fragmento atual pelo fragmento de edição
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(com.cantina.iflanche.R.id.fragment_container, fragment)
-                    .setTransition(FragmentTransaction.TRANSIT_NONE)
-                    .addToBackStack(null)
-                    .commit()
+            // Substitui o fragmento atual pelo fragmento de edição
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.cantina.iflanche.R.id.fragment_container, fragment)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .addToBackStack(null)
+                .commit()
 
-            }
-
-            return view
         }
 
-        private fun loadDropdownItems() {
-            val items = listOf("Item 1", "Item 2", "Item 3") // Substitua com seus itens
-            val adapter =
-                ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, items)
-            binding.tfOptionsSubcategorySelect.setAdapter(adapter)
-        }
-
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
-
-
+        return view
     }
+
+    private fun loadDropdownItems() {
+        val items = listOf("Item 1", "Item 2", "Item 3") // Substitua com seus itens
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, items)
+        binding.tfOptionsSubcategorySelect.setAdapter(adapter)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+}
