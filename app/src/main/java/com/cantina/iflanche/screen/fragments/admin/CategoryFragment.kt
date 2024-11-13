@@ -12,6 +12,7 @@ import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentRegisterCategoryBinding
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.screen.HomeActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CategoryFragment : Fragment() {
@@ -34,8 +35,27 @@ class CategoryFragment : Fragment() {
         _binding = FragmentRegisterCategoryBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.tfOptionsCategorySelect.setOnClickListener {
+            binding.tfDropdownCategorySelect.error = null
+        }
+
         val btnAddNewCategory = binding.fabAddCategory
+        val btnDeleteCategory = binding.btnDeleteCategory
+
         goToAddCategoryScreen(btnAddNewCategory)
+
+        btnDeleteCategory.setOnClickListener {
+            selectedCategory = binding.tfOptionsCategorySelect.text.toString()
+            if (selectedCategory!!.isNotEmpty()) {
+                showDeleteAlertDialog(selectedCategory!!)
+            } else {
+
+                binding.tfDropdownCategorySelect.error = "Selecione uma categoria para apagar"
+
+            }
+
+
+        }
 
         if (categories.isNotEmpty()) {
             setupCategoryAdapter(categories)
@@ -59,7 +79,7 @@ class CategoryFragment : Fragment() {
         binding.tfOptionsCategorySelect.setText("")
         binding.tfDropdownCategorySelect.error = null
         binding.tfOptionsCategorySelect.clearFocus()
-        (activity as? HomeActivity)?.setAppBarTitle("Adicionar Categoria")
+        (activity as? HomeActivity)?.setAppBarTitle("Gerenciar Categoria")
 
         binding.root.setOnTouchListener { _, _ ->
             binding.tfOptionsCategorySelect.clearFocus()
@@ -131,5 +151,17 @@ class CategoryFragment : Fragment() {
             .commit()
     }
 
+    private fun showDeleteAlertDialog(categorySelected: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Apagar")
+            .setMessage("A categoria \"$categorySelected\" será apagada, deseja continuar?")
+            .setNegativeButton("Não") { dialog, which ->
+                // Respond to negative button press
+            }
+            .setPositiveButton("Sim") { dialog, which ->
+                // Respond to positive button press
+            }
+            .show()
+    }
 
 }
