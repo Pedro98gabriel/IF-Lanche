@@ -11,7 +11,7 @@ object LoadCategories {
         FirebaseDatabase.getInstance().reference.child("categories")
 
     fun loadCategories(callback: (List<String>) -> Unit, onError: (String) -> Unit) {
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val categories = mutableListOf<String>()
 
