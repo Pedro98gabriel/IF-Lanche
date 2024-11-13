@@ -60,8 +60,10 @@ class CategoryFragment : Fragment() {
         binding.tfOptionsCategorySelect.clearFocus()
         (activity as? HomeActivity)?.setAppBarTitle("Adicionar Categoria")
 
+
         binding.root.setOnTouchListener { _, _ ->
             binding.tfOptionsCategorySelect.clearFocus()
+            binding.tfDropdownCategorySelect.error = null
             false
         }
     }
@@ -107,11 +109,9 @@ class CategoryFragment : Fragment() {
             if (selectedCategory!!.isNotEmpty()) {
                 goToEditCategoryScreen(selectedCategory!!)
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Selecione uma categoria para editar",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                binding.tfDropdownCategorySelect.error = "Selecione uma categoria para editar"
+
             }
         }
     }
