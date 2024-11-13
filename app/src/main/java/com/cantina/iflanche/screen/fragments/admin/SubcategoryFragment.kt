@@ -1,60 +1,70 @@
 package com.cantina.iflanche.screen.fragments.admin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cantina.iflanche.R
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.cantina.iflanche.databinding.FragmentRegisterSubCategoryBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SubcategoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SubcategoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentRegisterSubCategoryBinding? = null
+    private val binding get() = _binding!!
+    private var selectedSubCategory: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_sub_category, container, false)
-    }
+        _binding = FragmentRegisterSubCategoryBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterSubCaregoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SubcategoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+
+            loadDropdownItems()
+
+
+            binding.btnEditSubcategory.setOnClickListener {
+                val fragment = AddSubCategoryFragment()
+
+                selectedSubCategory = binding.tfOptionsSubcategorySelect.text.toString()
+
+                // Cria um bundle com o nome da categoria
+                val bundle = Bundle()
+                bundle.putString("subCategoryName", selectedSubCategory)
+                fragment.arguments = bundle
+
+                // Substitui o fragmento atual pelo fragmento de edição
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(com.cantina.iflanche.R.id.fragment_container, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_NONE)
+                    .addToBackStack(null)
+                    .commit()
+
             }
+
+            return view
+        }
+
+        private fun loadDropdownItems() {
+            val items = listOf("Item 1", "Item 2", "Item 3") // Substitua com seus itens
+            val adapter =
+                ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, items)
+            binding.tfOptionsSubcategorySelect.setAdapter(adapter)
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+
+
     }
-}
