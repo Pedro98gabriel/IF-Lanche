@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentRegisterCategoryBinding
 import com.cantina.iflanche.firebase.LoadCategories
