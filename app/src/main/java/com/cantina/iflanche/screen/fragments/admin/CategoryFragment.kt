@@ -1,5 +1,6 @@
 package com.cantina.iflanche.screen.fragments.admin
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +19,12 @@ class CategoryFragment : Fragment() {
     private var _binding: FragmentRegisterCategoryBinding? = null
     private val binding get() = _binding!!
     private var categories: List<String> = emptyList()
+    private var selectedCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         categories = (activity as? HomeActivity)?.categories ?: emptyList()
-
     }
 
     override fun onCreateView(
@@ -50,6 +51,21 @@ class CategoryFragment : Fragment() {
         _binding = null
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onResume() {
+        super.onResume()
+        loadCategories()
+        setupCategoryAdapter(categories)
+        binding.tfOptionsCategorySelect.setText("")
+        binding.tfOptionsCategorySelect.clearFocus()
+        (activity as? HomeActivity)?.setAppBarTitle("Adicionar Categoria")
+
+        binding.root.setOnTouchListener { _, _ ->
+            binding.tfOptionsCategorySelect.clearFocus()
+            false
+        }
+    }
+
     private fun goToAddCategoryScreen(btnAddNewCategory: FloatingActionButton) {
         btnAddNewCategory.setOnClickListener {
             val addCategoryFragment = AddCategoryFragment()
@@ -72,7 +88,6 @@ class CategoryFragment : Fragment() {
                 }
             },
             onError = { errorMessage ->
-                // Exibe o erro em caso de falha ao carregar as categorias
                 Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
             }
         )
@@ -86,6 +101,35 @@ class CategoryFragment : Fragment() {
             categories
         )
         binding.tfOptionsCategorySelect.setAdapter(adapter)
+
+        binding.btnEditCategory.setOnClickListener {
+            selectedCategory = binding.tfOptionsCategorySelect.text.toString()
+            if (selectedCategory!!.isNotEmpty()) {
+                goToEditCategoryScreen(selectedCategory!!)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Selecione uma categoria para editar",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
+
+    private fun goToEditCategoryScreen(categoryName: String) {
+        val fragment = AddCategoryFragment()
+
+        // Cria um bundle com o nome da categoria
+        val bundle = Bundle()
+        bundle.putString("categoryName", categoryName)
+        fragment.arguments = bundle
+
+        // Substitui o fragmento atual pelo fragmento de edição
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
 
 }
