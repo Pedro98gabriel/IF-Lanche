@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentRegisterSubCategoryBinding
+import com.cantina.iflanche.firebase.DeleteCategory
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.screen.HomeActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class SubcategoryFragment : Fragment() {
@@ -53,13 +56,17 @@ class SubcategoryFragment : Fragment() {
     ): View? {
         _binding = FragmentRegisterSubCategoryBinding.inflate(inflater, container, false)
         val view = binding.root
-        
+
         binding.tfOptionsSubcategorySelect.setOnClickListener {
             binding.tfDropdownSubcategorySelect.error = null
         }
 
         loadSubCategories()
         editSubCategory()
+
+        val btnDeleteCategory = binding.btnRemoveSubcategory
+        deleteSelectedSubCategory(btnDeleteCategory)
+
         goToAddSubCategory()
 
         return view
@@ -127,7 +134,7 @@ class SubcategoryFragment : Fragment() {
                 goToEditSubCategoryScreen(selectedSubCategory!!)
             } else {
 
-                binding.tfDropdownSubcategorySelect.error = "Selecione uma categoria para editar"
+                binding.tfDropdownSubcategorySelect.error = "Selecione uma Subcategoria para editar"
 
             }
         }
@@ -146,6 +153,47 @@ class SubcategoryFragment : Fragment() {
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun deleteSelectedSubCategory(btnDeleteSubCategory: Button) {
+        btnDeleteSubCategory.setOnClickListener {
+            selectedSubCategory = binding.tfOptionsSubcategorySelect.text.toString()
+            if (selectedSubCategory!!.isNotEmpty()) {
+                showDeleteAlertDialog(selectedSubCategory!!)
+            } else {
+
+                binding.tfDropdownSubcategorySelect.error = "Selecione uma Subcategoria para apagar"
+
+            }
+        }
+    }
+
+    private fun showDeleteAlertDialog(subCategorySelected: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Apagar")
+            .setMessage("A Subcategoria \"$subCategorySelected\" será apagada, deseja continuar?")
+            .setNegativeButton("Não") { dialog, which ->
+            }
+            .setPositiveButton("Sim") { dialog, which ->
+                DeleteCategory.deleteSubCategory(
+                    selectedSubCategory!!,
+                    onSuccess = {
+                        Toast.makeText(
+                            requireContext(),
+                            "Subcategoria removida com sucesso",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.tfOptionsSubcategorySelect.setText("")
+                        binding.tfOptionsSubcategorySelect.clearFocus()
+
+
+                    },
+                    onError = { errorMessage ->
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                )
+            }
+            .show()
     }
 
 
