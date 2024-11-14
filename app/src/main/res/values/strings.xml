@@ -20,4 +20,8 @@
     <string name="edit_category_text">Editar</string>
     <string name="remove_category_text">Remover</string>
     <string name="save_category_text">Salvar</string>
+    <string name="add_product_image">Imagem do Produto</string>
+    <string name="product_description">Descrição</string>
+    <string name="product_price">Preço</string>
+    <string name="sub_category_text">Subcategoria</string>
 </resources>
