@@ -21,14 +21,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class SubcategoryFragment : Fragment() {
     private var _binding: FragmentRegisterSubCategoryBinding? = null
     private val binding get() = _binding!!
-    private var subCategories: List<String> = emptyList()
-
     private var selectedSubCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        subCategories = (activity as? HomeActivity)?.categories ?: emptyList()
-
 
     }
 
@@ -36,7 +32,6 @@ class SubcategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         loadSubCategories()
-        setupSubCategoryAdapters(subCategories)
         binding.tfOptionsSubcategorySelect.setText("")
         binding.tfDropdownSubcategorySelect.error = null
         binding.tfOptionsSubcategorySelect.clearFocus()
