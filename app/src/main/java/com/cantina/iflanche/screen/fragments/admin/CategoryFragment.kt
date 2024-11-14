@@ -21,13 +21,11 @@ class CategoryFragment : Fragment() {
 
     private var _binding: FragmentRegisterCategoryBinding? = null
     private val binding get() = _binding!!
-    private var categories: List<String> = emptyList()
     private var selectedCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        categories = (activity as? HomeActivity)?.categories ?: emptyList()
     }
 
     override fun onCreateView(
@@ -48,11 +46,7 @@ class CategoryFragment : Fragment() {
 
         deleteSelectedItem(btnDeleteCategory)
 
-        if (categories.isNotEmpty()) {
-            setupCategoryAdapter(categories)
-        } else {
-            loadCategories()
-        }
+        loadCategories()
 
         return view
     }
@@ -79,7 +73,6 @@ class CategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         loadCategories()
-        setupCategoryAdapter(categories)
         binding.tfOptionsCategorySelect.setText("")
         binding.tfDropdownCategorySelect.error = null
         binding.tfOptionsCategorySelect.clearFocus()
