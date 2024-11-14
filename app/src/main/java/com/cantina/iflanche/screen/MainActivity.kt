@@ -18,12 +18,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //start the activity automaticcaly for test purposes
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.putExtra("userType", "Administrador") // Pass any required data
-        startActivity(intent)
-        finish() // Close MainActivity
-        //finish test activity
+//        //start the activity automaticcaly for test purposes
+//        val intent = Intent(this, HomeActivity::class.java)
+//        intent.putExtra("userType", "Administrador") // Pass any required data
+//        startActivity(intent)
+//        finish() // Close MainActivity
+//        //finish test activity
 
         userLoginRepository = UserLoginRepository(this)
 
