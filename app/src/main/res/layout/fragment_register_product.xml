@@ -120,7 +120,7 @@
                     android:id="@+id/tf_options_product_sub_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sub_category_text"
+                    android:hint="@string/subcategory_text"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
