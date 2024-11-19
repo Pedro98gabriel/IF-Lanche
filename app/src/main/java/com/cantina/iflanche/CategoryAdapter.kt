@@ -22,7 +22,7 @@ class CategoriaAdapter(private val categorias: List<String>) :
     override fun getItemCount(): Int = categorias.size
 
     class CategoriaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textViewCategoria: TextView = itemView.findViewById(R.id.textCategoryName)
+        private val textViewCategoria: TextView = itemView.findViewById(R.id.itemTextCategoryName)
 
         fun bind(categoria: String) {
             textViewCategoria.text = categoria
