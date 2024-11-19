@@ -6,10 +6,11 @@
     card_view:cardElevation="4dp">
 
     <TextView
-        android:id="@+id/textCategoryName"
+        android:id="@+id/itemTextCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:text="Nome"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold" />
