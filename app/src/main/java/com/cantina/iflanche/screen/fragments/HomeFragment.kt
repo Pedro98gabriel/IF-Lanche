@@ -70,9 +70,9 @@ class HomeFragment : Fragment() {
 
     private fun carregarSubcategorias() {
         LoadCategories.loadSubCategories(
-            callback = { Subcategories ->
+            callback = { subcategories ->
                 subcategoriasList.clear()
-                subcategoriasList.addAll(Subcategories)
+                subcategoriasList.addAll(subcategories)
                 subcategoriaAdapter.notifyDataSetChanged()
             },
             onError = { errorMessage ->
