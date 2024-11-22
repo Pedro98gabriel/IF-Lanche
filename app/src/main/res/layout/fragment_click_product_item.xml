@@ -90,28 +90,6 @@
         app:layout_constraintStart_toEndOf="@id/textViewProductItemClickSubCategory"
         app:layout_constraintTop_toTopOf="@id/textViewProductItemClickSubCategory" />
 
-
-    <TextView
-        android:id="@+id/textViewProductItemClickAvailability"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Disponível: "
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickSubCategory" />
-
-    <TextView
-        android:id="@+id/textViewProductItemClickAvailabilityText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sim"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickAvailability"
-        app:layout_constraintStart_toEndOf="@id/textViewProductItemClickAvailability"
-        app:layout_constraintTop_toTopOf="@id/textViewProductItemClickAvailability" />
-
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

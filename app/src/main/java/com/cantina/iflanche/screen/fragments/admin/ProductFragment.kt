@@ -42,8 +42,6 @@ class ProductFragment : Fragment() {
     private var btnAddProduct: Button? = null
     private var selectedCategory: String? = null
     private var selectedSubCategory: String? = null
-    private val availabilityOptions: Array<String> = arrayOf("Sim", "Não")
-    private var availabilitySelected: String? = null
     private lateinit var inputFields: List<View>
     private lateinit var productImage: ImageView
     private var imageUri: Uri? = null
@@ -72,7 +70,6 @@ class ProductFragment : Fragment() {
             binding.tfProductPriceContent,
             binding.tfOptionsProductCategory,
             binding.tfOptionsProductSubCategory,
-            binding.tfOptionsProductAvailability
         )
 
         try {
@@ -85,7 +82,6 @@ class ProductFragment : Fragment() {
 
         setupListeners()
         loadCategoriesAndSubCategories()
-        setupAvailabilityDropdown()
 
         productImage = binding.productImage
 
@@ -168,12 +164,6 @@ class ProductFragment : Fragment() {
         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun setupAvailabilityDropdown() {
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.list_item_dropdowm, availabilityOptions)
-        binding.tfOptionsProductAvailability.setAdapter(adapter)
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun setupListeners() {
         binding.btnAddProduct.setOnClickListener {
@@ -212,10 +202,6 @@ class ProductFragment : Fragment() {
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
                 selectedSubCategory = adapterView.getItemAtPosition(position).toString()
             }
-        binding.tfOptionsProductAvailability.onItemClickListener =
-            AdapterView.OnItemClickListener { adapterView, _, position, _ ->
-                availabilitySelected = adapterView.getItemAtPosition(position).toString()
-            }
 
         binding.tfOptionsProductCategory.setOnClickListener {
             binding.tfDropdownProductCategory.error = null
@@ -223,10 +209,6 @@ class ProductFragment : Fragment() {
 
         binding.tfOptionsProductSubCategory.setOnClickListener {
             binding.tfDropdownProductSubCategory.error = null
-        }
-
-        binding.tfOptionsProductAvailability.setOnClickListener {
-            binding.tfDropdownProductAvailability.error = null
         }
 
     }
@@ -262,11 +244,6 @@ class ProductFragment : Fragment() {
             isValid = false
         }
 
-        if (availabilitySelected == null) {
-            binding.tfDropdownProductAvailability.error = "Selecione a disponibilidade do produto"
-            isValid = false
-        }
-
         if (imageUri == null) {
             Toast.makeText(
                 context,
@@ -296,8 +273,6 @@ class ProductFragment : Fragment() {
         binding.tfProductPriceContent.text?.clear()
         binding.tfOptionsProductCategory.text?.clear()
         binding.tfOptionsProductSubCategory.text?.clear()
-        binding.tfOptionsProductAvailability.text?.clear()
-        availabilitySelected = null
         selectedCategory = null
         selectedSubCategory = null
         imageUri = null
@@ -346,7 +321,6 @@ class ProductFragment : Fragment() {
         val price = binding.tfProductPriceContent.text.toString()
         val selectedCategory = binding.tfOptionsProductCategory.text.toString()
         val selectedSubCategory = binding.tfOptionsProductSubCategory.text.toString()
-        val availability = availabilitySelected
 
         val product = Item(
             id = null,
@@ -356,7 +330,6 @@ class ProductFragment : Fragment() {
             price = price,
             category = selectedCategory,
             subCategory = selectedSubCategory,
-            availability = availability!!
         )
 
         val database: FirebaseDatabase =

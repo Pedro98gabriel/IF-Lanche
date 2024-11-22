@@ -8,5 +8,4 @@ data class Item(
     val price: String = "",
     val category: String = "",
     val subCategory: String = "",
-    val availability: String = "",
 )
