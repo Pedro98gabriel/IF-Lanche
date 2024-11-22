@@ -257,10 +257,10 @@ class ProductFragment : Fragment() {
             isValid = false
         }
 
-//        if (selectedSubCategory == null) {
-//            binding.tfDropdownProductSubCategory.error = "Selecione a Subcategoria do produto"
-//            isValid = false
-//        }
+        if (selectedSubCategory == null) {
+            binding.tfDropdownProductSubCategory.error = "Selecione a Subcategoria do produto"
+            isValid = false
+        }
 
         if (availabilitySelected == null) {
             binding.tfDropdownProductAvailability.error = "Selecione a disponibilidade do produto"
