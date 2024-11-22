@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cantina.iflanche.baseclasses.Item
 
 class SubcategoriaAdapter(
-    private val subcategorias: List<String>, private val produtos: List<Item>
+    private val subcategorias: List<String>,
+    private val produtos: List<Item>,
+    private val onItemClick: (Item) -> Unit
 ) : RecyclerView.Adapter<SubcategoriaAdapter.SubcategoriaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubcategoriaViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_subcategory, parent, false)
-        return SubcategoriaViewHolder(view)
+        return SubcategoriaViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: SubcategoriaViewHolder, position: Int) {
@@ -25,7 +27,8 @@ class SubcategoriaAdapter(
 
     override fun getItemCount(): Int = subcategorias.size
 
-    class SubcategoriaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SubcategoriaViewHolder(itemView: View, private val onItemClick: (Item) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
         private val textViewSubcategoria: TextView =
             itemView.findViewById(R.id.itemTextSubcategoryName)
         private val produtosContainer: RecyclerView = itemView.findViewById(R.id.produtosContainer)
@@ -34,7 +37,7 @@ class SubcategoriaAdapter(
             textViewSubcategoria.text = subcategoria
             produtosContainer.layoutManager =
                 LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            produtosContainer.adapter = ProdutoAdapter(produtos)
+            produtosContainer.adapter = ProdutoAdapter(produtos, onItemClick)
         }
     }
 }

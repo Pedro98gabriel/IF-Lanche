@@ -16,6 +16,7 @@ import com.cantina.iflanche.baseclasses.Item
 import com.cantina.iflanche.databinding.FragmentHomeBinding
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.firebase.LoadProducts
+import com.cantina.iflanche.screen.fragments.admin.ClickProductItemFragment
 import com.cantina.iflanche.utils.SpacingItemDecoration
 
 class HomeFragment : Fragment() {
@@ -26,9 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var subcategoriaAdapter: SubcategoriaAdapter
     private val categoriasList = mutableListOf<String>()
     private val subcategoriasList = mutableListOf<String>()
-
     private val produtosList = mutableListOf<Item>()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,20 +37,19 @@ class HomeFragment : Fragment() {
         recyclerView = binding.recyclerViewCategories
         subcategoryRecyclerView = binding.recyclerViewSubcategories
 
-        // Configurar GridLayoutManager com orientação horizontal
         val layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layoutManager
 
-        // Adicionar espaçamento entre os itens
         val spacing = resources.getDimensionPixelSize(R.dimen.spacing)
         recyclerView.addItemDecoration(SpacingItemDecoration(spacing))
 
         categoriaAdapter = CategoriaAdapter(categoriasList)
         recyclerView.adapter = categoriaAdapter
 
-        // Configurar LinearLayoutManager para subcategorias
         subcategoryRecyclerView.layoutManager = LinearLayoutManager(context)
-        subcategoriaAdapter = SubcategoriaAdapter(subcategoriasList, produtosList)
+        subcategoriaAdapter = SubcategoriaAdapter(subcategoriasList, produtosList) { item ->
+            onProductClick(item)
+        }
         subcategoryRecyclerView.adapter = subcategoriaAdapter
 
         carregarCategorias()
@@ -94,5 +92,21 @@ class HomeFragment : Fragment() {
                 Log.e("HomeFragment", errorMessage)
             }
         )
+    }
+
+    private fun onProductClick(item: Item) {
+        val fragment = ClickProductItemFragment()
+        val bundle = Bundle()
+        bundle.putString("productId", item.id)
+        bundle.putString("productName", item.name)
+        bundle.putString("productPrice", item.price)
+        bundle.putString("productImageUrl", item.imageUrl)
+        bundle.putString("productDescription", item.description)
+        fragment.arguments = bundle
+
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

@@ -18,6 +18,7 @@ object LoadProducts {
                 for (produtoSnapshot in snapshot.children) {
                     val produto = produtoSnapshot.getValue(Item::class.java)
                     if (produto != null) {
+                        produto.id = produtoSnapshot.key ?: ""
                         val subcategory = produto.subCategory
                         if (subcategoryMap.containsKey(subcategory)) {
                             subcategoryMap[subcategory]?.add(produto)

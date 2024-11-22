@@ -1,0 +1,143 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewProductItemClick"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Product Name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="R$ 0.00"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="16dp"
+        android:text="Descrição"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickName" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Categoria: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickDescription" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickCategoryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lanches"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickCategory"
+        app:layout_constraintStart_toEndOf="@id/textViewProductItemClickCategory"
+        app:layout_constraintTop_toTopOf="@id/textViewProductItemClickCategory" />
+
+
+    <TextView
+        android:id="@+id/textViewProductItemClickSubCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Subcategoria: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickCategory" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickSubCategoryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Promoções"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickSubCategory"
+        app:layout_constraintStart_toEndOf="@id/textViewProductItemClickSubCategory"
+        app:layout_constraintTop_toTopOf="@id/textViewProductItemClickSubCategory" />
+
+
+    <TextView
+        android:id="@+id/textViewProductItemClickAvailability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Disponível: "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickSubCategory" />
+
+    <TextView
+        android:id="@+id/textViewProductItemClickAvailabilityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sim"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickAvailability"
+        app:layout_constraintStart_toEndOf="@id/textViewProductItemClickAvailability"
+        app:layout_constraintTop_toTopOf="@id/textViewProductItemClickAvailability" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickSubCategory">
+
+        <Button
+            android:id="@+id/btn_edit_product"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/edit_category_text"
+            android:textColor="@color/red" />
+
+        <Button
+            android:id="@+id/btn_remove_product"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/remove_category_text"
+            android:textColor="@color/red" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
