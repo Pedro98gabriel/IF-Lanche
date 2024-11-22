@@ -26,7 +26,7 @@ class ClickProductItemFragment : Fragment() {
         val productDescription = arguments?.getString("productDescription")
 
         binding.textViewProductItemClickName.text = productName
-        binding.textViewProductItemClickPrice.text = "R$: $productPrice"
+        binding.textViewProductItemClickPrice.text = "R$ $productPrice"
         binding.textViewProductItemClickDescription.text = productDescription
         Glide.with(this).load(productImageUrl).into(binding.imageViewProductItemClick)
 
