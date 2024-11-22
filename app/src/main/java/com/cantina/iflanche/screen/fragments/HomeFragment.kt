@@ -13,6 +13,7 @@ import com.cantina.iflanche.CategoriaAdapter
 import com.cantina.iflanche.R
 import com.cantina.iflanche.SubcategoriaAdapter
 import com.cantina.iflanche.baseclasses.Item
+import com.cantina.iflanche.databinding.FragmentCategoryClickItemBinding
 import com.cantina.iflanche.databinding.FragmentHomeBinding
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.firebase.LoadProducts
@@ -43,7 +44,9 @@ class HomeFragment : Fragment() {
         val spacing = resources.getDimensionPixelSize(R.dimen.spacing)
         recyclerView.addItemDecoration(SpacingItemDecoration(spacing))
 
-        categoriaAdapter = CategoriaAdapter(categoriasList)
+        categoriaAdapter = CategoriaAdapter(categoriasList) { category ->
+            onCategoryClick(category)
+        }
         recyclerView.adapter = categoriaAdapter
 
         subcategoryRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -102,6 +105,18 @@ class HomeFragment : Fragment() {
         bundle.putString("productPrice", item.price)
         bundle.putString("productImageUrl", item.imageUrl)
         bundle.putString("productDescription", item.description)
+        fragment.arguments = bundle
+
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun onCategoryClick(category: String) {
+        val fragment = CategoryClickItemFragment()
+        val bundle = Bundle()
+        bundle.putString("categoryName", category)
         fragment.arguments = bundle
 
         val transaction = parentFragmentManager.beginTransaction()

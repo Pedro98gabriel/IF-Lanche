@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoriaAdapter(private val categorias: List<String>) :
-    RecyclerView.Adapter<CategoriaAdapter.CategoriaViewHolder>() {
+class CategoriaAdapter(
+    private val categorias: List<String>,
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<CategoriaAdapter.CategoriaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoriaViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-        return CategoriaViewHolder(view)
+        return CategoriaViewHolder(view, onItemClick)
     }
 
     override fun onBindViewHolder(holder: CategoriaViewHolder, position: Int) {
@@ -21,11 +23,16 @@ class CategoriaAdapter(private val categorias: List<String>) :
 
     override fun getItemCount(): Int = categorias.size
 
-    class CategoriaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textViewCategoria: TextView = itemView.findViewById(R.id.itemTextCategoryName)
+    class CategoriaViewHolder(itemView: View, private val onItemClick: (String) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
+        private val textViewCategoryName: TextView =
+            itemView.findViewById(R.id.itemTextCategoryName)
 
-        fun bind(categoria: String) {
-            textViewCategoria.text = categoria
+        fun bind(category: String) {
+            textViewCategoryName.text = category
+            itemView.setOnClickListener {
+                onItemClick(category)
+            }
         }
     }
 }
