@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cantina.iflanche.CategoriaAdapter
 import com.cantina.iflanche.R
 import com.cantina.iflanche.SubcategoriaAdapter
+import com.cantina.iflanche.baseclasses.Item
 import com.cantina.iflanche.databinding.FragmentHomeBinding
 import com.cantina.iflanche.firebase.LoadCategories
+import com.cantina.iflanche.firebase.LoadProducts
 import com.cantina.iflanche.utils.SpacingItemDecoration
 
 class HomeFragment : Fragment() {
@@ -24,6 +26,9 @@ class HomeFragment : Fragment() {
     private lateinit var subcategoriaAdapter: SubcategoriaAdapter
     private val categoriasList = mutableListOf<String>()
     private val subcategoriasList = mutableListOf<String>()
+
+    private val produtosList = mutableListOf<Item>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +51,12 @@ class HomeFragment : Fragment() {
 
         // Configurar LinearLayoutManager para subcategorias
         subcategoryRecyclerView.layoutManager = LinearLayoutManager(context)
-        subcategoriaAdapter = SubcategoriaAdapter(subcategoriasList)
+        subcategoriaAdapter = SubcategoriaAdapter(subcategoriasList, produtosList)
         subcategoryRecyclerView.adapter = subcategoriaAdapter
 
         carregarCategorias()
         carregarSubcategorias()
+        carregarProdutos()
 
         return binding.root
     }
@@ -70,9 +76,22 @@ class HomeFragment : Fragment() {
 
     private fun carregarSubcategorias() {
         LoadCategories.loadSubCategories(
-            callback = { subcategories ->
+            callback = { Subcategories ->
                 subcategoriasList.clear()
-                subcategoriasList.addAll(subcategories)
+                subcategoriasList.addAll(Subcategories)
+                subcategoriaAdapter.notifyDataSetChanged()
+            },
+            onError = { errorMessage ->
+                Log.e("HomeFragment", errorMessage)
+            }
+        )
+    }
+
+    private fun carregarProdutos() {
+        LoadProducts.loadProdutos(
+            callback = { produtos ->
+                produtosList.clear()
+                produtosList.addAll(produtos)
                 subcategoriaAdapter.notifyDataSetChanged()
             },
             onError = { errorMessage ->

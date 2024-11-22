@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/itemTextSubcategoryName"
@@ -13,4 +12,11 @@
         android:text="@string/subcategory_text"
         android:textSize="24sp"
         android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/produtosContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
 </LinearLayout>

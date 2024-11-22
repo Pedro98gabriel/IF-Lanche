@@ -15,7 +15,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/itemTextSubcategoryName"
+                android:id="@+id/itemTextCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -34,8 +34,8 @@
                 android:id="@+id/recyclerViewSubcategories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:scrollbars="vertical" />
+                android:orientation="horizontal"
+                android:scrollbars="horizontal" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
