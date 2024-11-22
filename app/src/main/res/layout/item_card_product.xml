@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@id/cardProduct" />
 
     <TextView
-        android:id="@+id/itemNamePrice"
+        android:id="@+id/itemPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="R$ 22.90"
