@@ -26,11 +26,13 @@ class ProdutoAdapter(private val produtos: List<Item>) :
 
     class ProdutoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val textViewNomeProduto: TextView = itemView.findViewById(R.id.itemNomeProduto)
+        private val textViewProductPrice: TextView = itemView.findViewById(R.id.itemPrice)
         private val imageViewProduto: ImageView = itemView.findViewById(R.id.imageView_product)
 
 
         fun bind(produto: Item) {
             textViewNomeProduto.text = produto.name
+            textViewProductPrice.text = "R$ ${produto.price}"
             Glide.with(itemView.context)
                 .load(produto.imageUrl)
                 .into(imageViewProduto)
