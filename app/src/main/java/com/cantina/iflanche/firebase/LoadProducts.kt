@@ -11,17 +11,24 @@ object LoadProducts {
 
     private val database = FirebaseDatabase.getInstance().getReference("products")
 
-    fun loadProdutos(callback: (List<Item>) -> Unit, onError: (String) -> Unit) {
+    fun loadProdutos(callback: (Map<String, List<Item>>) -> Unit, onError: (String) -> Unit) {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val produtosList = mutableListOf<Item>()
+                val subcategoryMap = mutableMapOf<String, MutableList<Item>>()
                 for (produtoSnapshot in snapshot.children) {
                     val produto = produtoSnapshot.getValue(Item::class.java)
                     if (produto != null) {
-                        produtosList.add(produto)
+                        val subcategory = produto.subCategory
+                        if (subcategoryMap.containsKey(subcategory)) {
+                            subcategoryMap[subcategory]?.add(produto)
+                        } else {
+                            subcategoryMap[subcategory] = mutableListOf(produto)
+                        }
                     }
                 }
-                callback(produtosList)
+                val filteredSubcategoryMap = subcategoryMap.filter { it.value.isNotEmpty() }
+                Log.d("LoadProducts", "Filtered Subcategory Map: $filteredSubcategoryMap")
+                callback(filteredSubcategoryMap)
             }
 
             override fun onCancelled(error: DatabaseError) {

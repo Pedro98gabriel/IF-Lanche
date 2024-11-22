@@ -55,7 +55,6 @@ class HomeFragment : Fragment() {
         subcategoryRecyclerView.adapter = subcategoriaAdapter
 
         carregarCategorias()
-        carregarSubcategorias()
         carregarProdutos()
 
         return binding.root
@@ -74,25 +73,22 @@ class HomeFragment : Fragment() {
         )
     }
 
-    private fun carregarSubcategorias() {
-        LoadCategories.loadSubCategories(
-            callback = { Subcategories ->
-                subcategoriasList.clear()
-                subcategoriasList.addAll(Subcategories)
-                subcategoriaAdapter.notifyDataSetChanged()
-            },
-            onError = { errorMessage ->
-                Log.e("HomeFragment", errorMessage)
-            }
-        )
-    }
-
     private fun carregarProdutos() {
         LoadProducts.loadProdutos(
-            callback = { produtos ->
-                produtosList.clear()
-                produtosList.addAll(produtos)
-                subcategoriaAdapter.notifyDataSetChanged()
+            callback = { subcategoryMap ->
+                val filteredSubcategories = subcategoryMap.filter { it.value.isNotEmpty() }
+                val subcategories = filteredSubcategories.keys.toList()
+                val produtos = filteredSubcategories.values.flatten()
+                if (subcategories.isNotEmpty()) {
+                    produtosList.clear()
+                    produtosList.addAll(produtos)
+                    subcategoriasList.clear()
+                    subcategoriasList.addAll(subcategories)
+                    subcategoriaAdapter.notifyDataSetChanged()
+                    subcategoryRecyclerView.visibility = View.VISIBLE
+                } else {
+                    subcategoryRecyclerView.visibility = View.GONE
+                }
             },
             onError = { errorMessage ->
                 Log.e("HomeFragment", errorMessage)
