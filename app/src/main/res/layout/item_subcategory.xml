@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/subcategory_text"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -19,6 +18,7 @@
         android:id="@+id/produtosContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal" />
 
 </LinearLayout>
