@@ -217,6 +217,14 @@ class ProductFragment : Fragment() {
                 availabilitySelected = adapterView.getItemAtPosition(position).toString()
             }
 
+        binding.tfOptionsProductCategory.setOnClickListener {
+            binding.tfDropdownProductCategory.error = null
+        }
+
+        binding.tfOptionsProductSubCategory.setOnClickListener {
+            binding.tfDropdownProductSubCategory.error = null
+        }
+
         binding.tfOptionsProductAvailability.setOnClickListener {
             binding.tfDropdownProductAvailability.error = null
         }
@@ -243,6 +251,16 @@ class ProductFragment : Fragment() {
             binding.tfProductPrice.error = "Por favor, preencha o preço do produto"
             isValid = false
         }
+
+        if (selectedCategory == null) {
+            binding.tfDropdownProductCategory.error = "Selecione a categoria do produto"
+            isValid = false
+        }
+
+//        if (selectedSubCategory == null) {
+//            binding.tfDropdownProductSubCategory.error = "Selecione a Subcategoria do produto"
+//            isValid = false
+//        }
 
         if (availabilitySelected == null) {
             binding.tfDropdownProductAvailability.error = "Selecione a disponibilidade do produto"
@@ -331,13 +349,14 @@ class ProductFragment : Fragment() {
         val availability = availabilitySelected
 
         val product = Item(
-            imageUrl,
-            name,
-            description,
-            price,
-            selectedCategory,
-            selectedSubCategory,
-            availability!!
+            id = null,
+            imageUrl = imageUrl,
+            name = name,
+            description = description,
+            price = price,
+            category = selectedCategory,
+            subCategory = selectedSubCategory,
+            availability = availability!!
         )
 
         val database: FirebaseDatabase =
