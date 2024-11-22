@@ -1,7 +1,5 @@
 package com.cantina.iflanche.baseclasses
 
-import com.google.android.gms.common.GoogleApiAvailability
-
 data class Item(
     val imageUrl: String = "",
     val name: String = "",
