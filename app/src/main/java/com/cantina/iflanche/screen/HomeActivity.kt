@@ -22,6 +22,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var drawerToggle: ActionBarDrawerToggle
     var categories: List<String>? = null
+    private var userType: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +33,13 @@ class HomeActivity : AppCompatActivity() {
         appBarNotificationIcon()
 
         val toolbar: Toolbar = binding.toolbar
-        val userType = intent.getStringExtra("userType") ?: "Aluno"
+        userType = intent.getStringExtra("userType") ?: "Aluno"
 
         // Configura o menu de navegação de acordo com o tipo de usuário
         val navigationView = binding.navView
         if (userType == "Aluno") {
             navigationView.inflateMenu(R.menu.nav_menu_student)
+
         } else {
             navigationView.inflateMenu(R.menu.nav_menu_admin)
         }
@@ -144,6 +147,10 @@ class HomeActivity : AppCompatActivity() {
         notificationIconAppBar.setOnClickListener {
             Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun getUserType(): String? {
+        return userType
     }
 
 }
