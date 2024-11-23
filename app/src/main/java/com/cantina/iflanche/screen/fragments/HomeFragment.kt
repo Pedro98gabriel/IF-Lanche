@@ -104,6 +104,8 @@ class HomeFragment : Fragment() {
         bundle.putString("productName", item.name)
         bundle.putString("productPrice", item.price)
         bundle.putString("productImageUrl", item.imageUrl)
+        bundle.putString("productCategory", item.category)
+        bundle.putString("productSubCategory", item.subCategory)
         bundle.putString("productDescription", item.description)
         fragment.arguments = bundle
 
