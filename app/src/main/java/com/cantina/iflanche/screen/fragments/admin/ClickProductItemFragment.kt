@@ -1,6 +1,5 @@
 package com.cantina.iflanche.screen.fragments.admin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.FragmentClickProductItemBinding
 import com.cantina.iflanche.firebase.DeleteProduct
 import com.cantina.iflanche.screen.HomeActivity
@@ -40,11 +40,34 @@ class ClickProductItemFragment : Fragment() {
             }
         }
 
+        binding.btnEditProduct.setOnClickListener {
+            val productId = arguments?.getString("productId")
+            val productName = arguments?.getString("productName")
+            val productPrice = arguments?.getString("productPrice")
+            val productImageUrl = arguments?.getString("productImageUrl")
+            val productCategory = arguments?.getString("productCategory")
+            val productSubCategory = arguments?.getString("productSubCategory")
+            val productDescription = arguments?.getString("productDescription")
+            if (productId != null && productName != null && productPrice != null && productImageUrl != null && productCategory != null && productSubCategory != null && productDescription != null) {
+                navigateToEditProductFragment(
+                    productId,
+                    productName,
+                    productPrice,
+                    productImageUrl,
+                    productCategory,
+                    productSubCategory,
+                    productDescription
+                )
+            } else {
+                Toast.makeText(requireContext(), "Product details not found", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
         return view
     }
 
     private fun loadProductData() {
-        val productId = arguments?.getString("productId")
         val productName = arguments?.getString("productName")
         val productPrice = arguments?.getString("productPrice")
         val productImageUrl = arguments?.getString("productImageUrl")
@@ -87,6 +110,32 @@ class ClickProductItemFragment : Fragment() {
                 Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
             }
         )
+    }
+
+    private fun navigateToEditProductFragment(
+        productId: String,
+        productName: String,
+        productPrice: String,
+        productImageUrl: String,
+        productCategory: String,
+        productSubCategory: String,
+        productDescription: String
+    ) {
+        val fragment = ProductFragment()
+        val bundle = Bundle()
+        bundle.putString("productId", productId)
+        bundle.putString("productName", productName)
+        bundle.putString("productPrice", productPrice)
+        bundle.putString("productImageUrl", productImageUrl)
+        bundle.putString("productCategory", productCategory)
+        bundle.putString("productSubCategory", productSubCategory)
+        bundle.putString("productDescription", productDescription)
+        fragment.arguments = bundle
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {
