@@ -23,6 +23,7 @@ import com.cantina.iflanche.R
 import com.cantina.iflanche.baseclasses.Item
 import com.cantina.iflanche.databinding.FragmentRegisterProductBinding
 import com.cantina.iflanche.firebase.LoadCategories
+import com.cantina.iflanche.screen.HomeActivity
 import com.cantina.iflanche.utils.CommonFunctions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -47,6 +48,7 @@ class ProductFragment : Fragment() {
     private lateinit var productImage: ImageView
     private var imageUri: Uri? = null
     private lateinit var productReference: StorageReference
+    private var isEditing: Boolean = false
 
 
     companion object {
@@ -75,7 +77,10 @@ class ProductFragment : Fragment() {
         )
 
         if (itemID != null) {
+            isEditing = true
             binding.btnAddProduct.text = "Atualizar"
+            (activity as? HomeActivity)?.setAppBarTitle("Editar Produto")
+
             loadProductData(itemID!!)
         }
 
@@ -176,7 +181,18 @@ class ProductFragment : Fragment() {
     private fun setupListeners() {
         binding.btnAddProduct.setOnClickListener {
             CommonFunctions.clearFocusFromAllFields(inputFields, requireContext())
-            addProductToDB()
+            if (isEditing) {
+                if (imageUri != null) {
+                    uploadImageToFirebaseUpdate { newImageUrl ->
+                        updateProductImage(itemID!!, newImageUrl)
+                    }
+                } else {
+                    updateProductInDB()
+                }
+            } else {
+                addProductToDB()
+            }
+
         }
 
         binding.root.setOnTouchListener { _, _ ->
@@ -323,6 +339,27 @@ class ProductFragment : Fragment() {
         }
     }
 
+    private fun uploadImageToFirebaseUpdate(onSuccess: (String) -> Unit) {
+        if (imageUri != null) {
+            val fileReference = productReference.child(UUID.randomUUID().toString())
+            fileReference.putFile(imageUri!!)
+                .addOnSuccessListener {
+                    fileReference.downloadUrl.addOnSuccessListener { uri ->
+                        val imageUrl = uri.toString()
+                        onSuccess(imageUrl)
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(
+                        context,
+                        "Falha ao fazer atualização da imagem",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+        }
+    }
+
     private fun registerProduct(imageUrl: String) {
         val name = binding.tfProductNameContent.text.toString()
         val description = binding.tfProductDescriptionContent.text.toString()
@@ -413,4 +450,44 @@ class ProductFragment : Fragment() {
             }
         })
     }
+
+    private fun updateProductInDB() {
+        val name = binding.tfProductNameContent.text.toString().trim()
+        val description = binding.tfProductDescriptionContent.text.toString().trim()
+        val price = binding.tfProductPriceContent.text.toString().trim()
+        val category = binding.tfOptionsProductCategory.text.toString().trim()
+        val subCategory = binding.tfOptionsProductSubCategory.text.toString().trim()
+
+        val database: DatabaseReference =
+            FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(itemID!!)
+        val updates = mapOf(
+            "name" to name,
+            "description" to description,
+            "price" to price,
+            "category" to category,
+            "subCategory" to subCategory
+        )
+
+        database.updateChildren(updates)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Produto atualizado com sucesso!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Falha ao atualizar o produto", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateProductImage(productId: String, newImageUrl: String) {
+        val database: DatabaseReference =
+            FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(productId)
+        database.child("imageUrl").setValue(newImageUrl)
+            .addOnSuccessListener {
+                Toast.makeText(context, "Imagem atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Falha ao atualizar a imagem", Toast.LENGTH_SHORT).show()
+            }
+    }
+
 }
