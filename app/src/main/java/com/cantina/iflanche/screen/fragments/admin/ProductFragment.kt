@@ -194,7 +194,6 @@ class ProductFragment : Fragment() {
                 addProductToDB()
             }
 
-
         }
 
         binding.root.setOnTouchListener { _, _ ->
@@ -343,18 +342,46 @@ class ProductFragment : Fragment() {
 
     private fun uploadImageToFirebaseUpdate(onSuccess: (String) -> Unit) {
         if (imageUri != null) {
-            val fileReference = productReference.child(UUID.randomUUID().toString())
-            fileReference.putFile(imageUri!!)
-                .addOnSuccessListener {
-                    fileReference.downloadUrl.addOnSuccessListener { uri ->
-                        val imageUrl = uri.toString()
-                        onSuccess(imageUrl)
+            val database: DatabaseReference =
+                FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(itemID!!)
+            database.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val product = snapshot.getValue(Item::class.java)
+                    product?.let {
+                        val oldImageUrl = it.imageUrl
+                        if (oldImageUrl.isNotEmpty()) {
+                            val oldImageRef =
+                                FirebaseStorage.getInstance().getReferenceFromUrl(oldImageUrl)
+                            oldImageRef.delete().addOnSuccessListener {
+                                Log.d("FirebaseStorage", "Old image deleted successfully")
+                            }.addOnFailureListener {
+                                Log.e("FirebaseStorage", "Failed to delete old image", it)
+                            }
+                        }
                     }
+
+                    val fileReference = productReference.child(UUID.randomUUID().toString())
+                    fileReference.putFile(imageUri!!)
+                        .addOnSuccessListener {
+                            fileReference.downloadUrl.addOnSuccessListener { uri ->
+                                val imageUrl = uri.toString()
+                                onSuccess(imageUrl)
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                "Falha ao fazer upload da imagem",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Falha ao fazer upload da imagem", Toast.LENGTH_SHORT)
-                        .show()
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Erro ao carregar produto", Toast.LENGTH_SHORT).show()
                 }
+            })
         }
     }
 
