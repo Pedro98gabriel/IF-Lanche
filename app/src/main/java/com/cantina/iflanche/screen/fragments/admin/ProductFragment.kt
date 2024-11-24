@@ -185,6 +185,7 @@ class ProductFragment : Fragment() {
                 if (imageUri != null) {
                     uploadImageToFirebaseUpdate { newImageUrl ->
                         updateProductImage(itemID!!, newImageUrl)
+                        updateProductInDB(newImageUrl)
                     }
                 } else {
                     updateProductInDB()
@@ -192,6 +193,7 @@ class ProductFragment : Fragment() {
             } else {
                 addProductToDB()
             }
+
 
         }
 
@@ -350,11 +352,7 @@ class ProductFragment : Fragment() {
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(
-                        context,
-                        "Falha ao fazer atualização da imagem",
-                        Toast.LENGTH_SHORT
-                    )
+                    Toast.makeText(context, "Falha ao fazer upload da imagem", Toast.LENGTH_SHORT)
                         .show()
                 }
         }
@@ -451,16 +449,14 @@ class ProductFragment : Fragment() {
         })
     }
 
-    private fun updateProductInDB() {
+    private fun updateProductInDB(newImageUrl: String? = null) {
         val name = binding.tfProductNameContent.text.toString().trim()
         val description = binding.tfProductDescriptionContent.text.toString().trim()
         val price = binding.tfProductPriceContent.text.toString().trim()
         val category = binding.tfOptionsProductCategory.text.toString().trim()
         val subCategory = binding.tfOptionsProductSubCategory.text.toString().trim()
 
-        val database: DatabaseReference =
-            FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(itemID!!)
-        val updates = mapOf(
+        val updates = mutableMapOf<String, Any>(
             "name" to name,
             "description" to description,
             "price" to price,
@@ -468,6 +464,12 @@ class ProductFragment : Fragment() {
             "subCategory" to subCategory
         )
 
+        newImageUrl?.let {
+            updates["imageUrl"] = it
+        }
+
+        val database: DatabaseReference =
+            FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(itemID!!)
         database.updateChildren(updates)
             .addOnSuccessListener {
                 Toast.makeText(context, "Produto atualizado com sucesso!", Toast.LENGTH_SHORT)
@@ -483,7 +485,6 @@ class ProductFragment : Fragment() {
             FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(productId)
         database.child("imageUrl").setValue(newImageUrl)
             .addOnSuccessListener {
-                Toast.makeText(context, "Imagem atualizada com sucesso!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Falha ao atualizar a imagem", Toast.LENGTH_SHORT).show()
