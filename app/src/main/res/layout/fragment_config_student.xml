@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:text="Config Student Fragment"
+        android:text="Não implementado"
         android:textSize="30sp" />
 
 </FrameLayout>
