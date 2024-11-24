@@ -20,22 +20,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Product Name"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick"
+        tools:text="Product Name" />
 
     <TextView
         android:id="@+id/textViewProductItemClickPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="R$ 0.00"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewProductItemClick"
+        tools:text="R$ 0.00" />
 
     <TextView
         android:id="@+id/textViewProductItemClickDescription"
@@ -44,10 +44,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="16dp"
-        android:text="Descrição"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickName" />
+        app:layout_constraintTop_toBottomOf="@id/textViewProductItemClickName"
+        tools:text="Descrição" />
 
     <TextView
         android:id="@+id/textViewProductItemClickCategory"
@@ -63,7 +63,7 @@
         android:id="@+id/textViewProductItemClickCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lanches"
+        android:text=""
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickCategory"
         app:layout_constraintStart_toEndOf="@id/textViewProductItemClickCategory"
@@ -84,7 +84,7 @@
         android:id="@+id/textViewProductItemClickSubCategoryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Promoções"
+        android:text=""
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/textViewProductItemClickSubCategory"
         app:layout_constraintStart_toEndOf="@id/textViewProductItemClickSubCategory"
