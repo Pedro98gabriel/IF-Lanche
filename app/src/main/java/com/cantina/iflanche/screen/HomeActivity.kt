@@ -1,5 +1,6 @@
 package com.cantina.iflanche.screen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -17,6 +18,7 @@ import com.cantina.iflanche.screen.fragments.admin.ProductFragment
 import com.cantina.iflanche.screen.fragments.admin.SubcategoryFragment
 import com.cantina.iflanche.screen.fragments.student.ConfigStudentFragment
 import com.cantina.iflanche.screen.fragments.student.ProfileStudentFragment
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -33,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
         appBarNotificationIcon()
 
         val toolbar: Toolbar = binding.toolbar
-        userType = intent.getStringExtra("userType") ?: "Aluno"
+        userType = intent.getStringExtra("userType")
 
         // Configura o menu de navegação de acordo com o tipo de usuário
         val navigationView = binding.navView
@@ -121,7 +123,11 @@ class HomeActivity : AppCompatActivity() {
             )
 
             R.id.nav_exit_admin -> {
-                Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             }
         }
     }
@@ -131,8 +137,12 @@ class HomeActivity : AppCompatActivity() {
             R.id.nav_home_student -> loadFragment(HomeFragment(), "IF-Lanche")
             R.id.nav_profile_student -> loadFragment(ProfileStudentFragment(), "Perfil de Usuário")
             R.id.nav_config_student -> loadFragment(ConfigStudentFragment(), "Configurações")
-            R.id.nav_exit_student -> {
-                Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
+            R.id.nav_exit_admin -> {
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             }
         }
     }

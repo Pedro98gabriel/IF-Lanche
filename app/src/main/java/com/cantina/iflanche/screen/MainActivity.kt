@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.databinding.ActivityMainBinding
-import com.cantina.iflanche.utils.CommonFunctions
 import com.cantina.iflanche.firebase.UserLoginRepository
-
+import com.cantina.iflanche.utils.CommonFunctions
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,12 +18,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        //start the activity automaticcaly for test purposes
-//        val intent = Intent(this, HomeActivity::class.java)
-//        intent.putExtra("userType", "Administrador") // Pass any required data
-//        startActivity(intent)
-//        finish() // Close MainActivity
-//        //finish test activity
+        // Verifica se o usuário está logado
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            // Redireciona para a tela principal
+            val intent = Intent(this, HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        } else {
+            // Exibe a tela de login
+            setContentView(binding.root) // Ajuste para o layout da tela de login
+        }
 
         userLoginRepository = UserLoginRepository(this)
 
@@ -44,17 +50,10 @@ class MainActivity : AppCompatActivity() {
             val email = binding.tfEmailLoginContent.text.toString().trim()
             val password = binding.tfPasswordLoginContent.text.toString().trim()
 
-            if (email.isEmpty() || !CommonFunctions.isValidEmail(email)) {
-                binding.tfEmailLogin.error = "Email inválido"
-            }
-
-            if (password.isEmpty() || password.length < 6) {
-                binding.tfPasswordLogin.error = "Senha inválida"
-            }
-
             userLoginRepository.loginUser(email, password) { success, message ->
                 if (!success) {
-                    // Handle login failure if needed
+                    binding.tfEmailLogin.error = " "
+                    binding.tfPasswordLogin.error = "Email ou senha incorretos"
                 }
             }
         }

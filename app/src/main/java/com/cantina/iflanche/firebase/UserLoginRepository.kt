@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.cantina.iflanche.screen.HomeActivity
+import com.cantina.iflanche.screen.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -28,9 +29,13 @@ class UserLoginRepository(private val context: Context) {
                         userRef.get().addOnSuccessListener { dataSnapshot ->
                             val userType =
                                 dataSnapshot.child("userType").getValue(String::class.java)
-                            val intent = Intent(context, HomeActivity::class.java)
-                            intent.putExtra("userType", userType)
+                            val intent = Intent(context, HomeActivity::class.java).apply {
+                                flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                putExtra("userType", userType)
+                            }
                             context.startActivity(intent)
+
                             callback(true, null)
                         }.addOnFailureListener {
                             Toast.makeText(
