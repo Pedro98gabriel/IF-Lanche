@@ -22,9 +22,13 @@ class CategoryFragment : Fragment() {
     private var _binding: FragmentRegisterCategoryBinding? = null
     private val binding get() = _binding!!
     private var selectedCategory: String? = null
+    private var itemID: String? = null // Nome da categoria a ser editada
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        itemID = arguments?.getString("categoryName")
+
 
     }
 

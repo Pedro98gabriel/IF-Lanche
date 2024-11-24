@@ -38,6 +38,7 @@ private const val urlFirebase: String = BuildConfig.URL_FIREBASE
 class ProductFragment : Fragment() {
     private var _binding: FragmentRegisterProductBinding? = null
     private val binding get() = _binding!!
+    private var itemID: String? = null // Nome da categoria a ser editada
 
     private var btnAddProduct: Button? = null
     private var selectedCategory: String? = null
@@ -54,6 +55,7 @@ class ProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        itemID = arguments?.getString("productId")
 
     }
 
@@ -71,6 +73,12 @@ class ProductFragment : Fragment() {
             binding.tfOptionsProductCategory,
             binding.tfOptionsProductSubCategory,
         )
+
+        if (itemID != null) {
+            binding.btnAddProduct.text = "Atualizar"
+            loadProductData(itemID!!)
+        }
+
 
         try {
             productReference = FirebaseStorage.getInstance().reference.child("product_images")
@@ -382,5 +390,27 @@ class ProductFragment : Fragment() {
         } else {
             Toast.makeText(context, "Erro ao gerar o ID do produto", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun loadProductData(productId: String) {
+        val database: DatabaseReference =
+            FirebaseDatabase.getInstance(urlFirebase).getReference("products").child(productId)
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val product = snapshot.getValue(Item::class.java)
+                product?.let {
+                    binding.tfProductNameContent.setText(it.name)
+                    binding.tfProductDescriptionContent.setText(it.description)
+                    binding.tfProductPriceContent.setText(it.price)
+                    binding.tfOptionsProductCategory.setText(it.category, false)
+                    binding.tfOptionsProductSubCategory.setText(it.subCategory, false)
+                    Glide.with(this@ProductFragment).load(it.imageUrl).into(binding.productImage)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Erro ao carregar produto", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

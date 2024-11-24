@@ -49,15 +49,7 @@ class ClickProductItemFragment : Fragment() {
             val productSubCategory = arguments?.getString("productSubCategory")
             val productDescription = arguments?.getString("productDescription")
             if (productId != null && productName != null && productPrice != null && productImageUrl != null && productCategory != null && productSubCategory != null && productDescription != null) {
-                navigateToEditProductFragment(
-                    productId,
-                    productName,
-                    productPrice,
-                    productImageUrl,
-                    productCategory,
-                    productSubCategory,
-                    productDescription
-                )
+                navigateToEditProductFragment(productId)
             } else {
                 Toast.makeText(requireContext(), "Product details not found", Toast.LENGTH_SHORT)
                     .show()
@@ -114,22 +106,10 @@ class ClickProductItemFragment : Fragment() {
 
     private fun navigateToEditProductFragment(
         productId: String,
-        productName: String,
-        productPrice: String,
-        productImageUrl: String,
-        productCategory: String,
-        productSubCategory: String,
-        productDescription: String
     ) {
         val fragment = ProductFragment()
         val bundle = Bundle()
         bundle.putString("productId", productId)
-        bundle.putString("productName", productName)
-        bundle.putString("productPrice", productPrice)
-        bundle.putString("productImageUrl", productImageUrl)
-        bundle.putString("productCategory", productCategory)
-        bundle.putString("productSubCategory", productSubCategory)
-        bundle.putString("productDescription", productDescription)
         fragment.arguments = bundle
 
         requireActivity().supportFragmentManager.beginTransaction()
