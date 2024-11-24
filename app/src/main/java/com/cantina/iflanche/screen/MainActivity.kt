@@ -3,6 +3,7 @@ package com.cantina.iflanche.screen
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cantina.iflanche.databinding.ActivityMainBinding
 import com.cantina.iflanche.firebase.UserLoginRepository
@@ -43,6 +44,13 @@ class MainActivity : AppCompatActivity() {
         )
 
         loginAndRedirect()
+        forgotPassword()
+    }
+
+    private fun forgotPassword() {
+        binding.txtForgotPasswordLogin.setOnClickListener {
+            Toast.makeText(this, "Não implementado", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun loginAndRedirect() {
@@ -66,4 +74,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+
 }
