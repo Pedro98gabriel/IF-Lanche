@@ -162,7 +162,7 @@ class HomeActivity : AppCompatActivity() {
                 loadFragment(ConfigStudentFragment(), "Configurações")
             }
 
-            R.id.nav_exit_admin -> {
+            R.id.nav_exit_student -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

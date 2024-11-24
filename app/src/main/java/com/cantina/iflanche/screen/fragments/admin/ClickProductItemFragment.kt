@@ -34,7 +34,7 @@ class ClickProductItemFragment : Fragment() {
         val view = binding.root
 
         val userType = (activity as? HomeActivity)?.getUserType()
-        if (userType != "Funcionário") {
+        if (userType == "Aluno") {
             binding.btnEditProduct.visibility = View.GONE
             binding.btnRemoveProduct.visibility = View.GONE
             binding.textViewProductItemClickCategory.visibility = View.GONE
