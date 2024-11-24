@@ -12,6 +12,7 @@ import com.cantina.iflanche.R
 import com.cantina.iflanche.baseclasses.Item
 import com.cantina.iflanche.databinding.FragmentCategoryClickItemBinding
 import com.cantina.iflanche.firebase.LoadProducts
+import com.cantina.iflanche.screen.HomeActivity
 import com.cantina.iflanche.screen.fragments.admin.ClickProductItemFragment
 
 class CategoryClickItemFragment : Fragment() {
@@ -28,7 +29,7 @@ class CategoryClickItemFragment : Fragment() {
         val view = binding.root
 
         val categoryName = arguments?.getString("categoryName")
-        binding.itemTextCategoryClick.text = categoryName
+        (activity as? HomeActivity)?.setAppBarTitle(categoryName.toString())
 
         produtoAdapter = ProdutoAdapter(produtosList) { item ->
             onProductClick(item)
@@ -51,6 +52,12 @@ class CategoryClickItemFragment : Fragment() {
                 produtosList.clear()
                 produtosList.addAll(produtos)
                 produtoAdapter.notifyDataSetChanged()
+
+                if (produtosList.isEmpty()) {
+                    binding.tvNoProducts.visibility = View.VISIBLE
+                } else {
+                    binding.tvNoProducts.visibility = View.GONE
+                }
             },
             onError = { errorMessage ->
                 Log.e("CategoryClickItemFragment", errorMessage)

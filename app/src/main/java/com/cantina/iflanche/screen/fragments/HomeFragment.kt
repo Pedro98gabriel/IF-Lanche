@@ -13,10 +13,10 @@ import com.cantina.iflanche.CategoriaAdapter
 import com.cantina.iflanche.R
 import com.cantina.iflanche.SubcategoriaAdapter
 import com.cantina.iflanche.baseclasses.Item
-import com.cantina.iflanche.databinding.FragmentCategoryClickItemBinding
 import com.cantina.iflanche.databinding.FragmentHomeBinding
 import com.cantina.iflanche.firebase.LoadCategories
 import com.cantina.iflanche.firebase.LoadProducts
+import com.cantina.iflanche.screen.HomeActivity
 import com.cantina.iflanche.screen.fragments.admin.ClickProductItemFragment
 import com.cantina.iflanche.utils.SpacingItemDecoration
 
@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false)
         recyclerView = binding.recyclerViewCategories
         subcategoryRecyclerView = binding.recyclerViewSubcategories
+        (activity as? HomeActivity)?.setAppBarTitle("IF-Lanche")
 
         val layoutManager = GridLayoutManager(context, 2, GridLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layoutManager
