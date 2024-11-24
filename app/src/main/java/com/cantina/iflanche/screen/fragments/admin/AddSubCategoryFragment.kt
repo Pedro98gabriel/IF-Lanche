@@ -64,7 +64,7 @@ class AddSubCategoryFragment : Fragment() {
                     checkSubCategoryExists(newCategoryName)
                 }
             } else {
-                binding.tfAddSubCategory.error = "Por favor, insira um nome de categoria"
+                binding.tfAddSubCategory.error = "Por favor, insira um nome de Subcategoria"
                 binding.progressBarAddSubCategory.visibility = ProgressBar.GONE
             }
         }
@@ -83,7 +83,7 @@ class AddSubCategoryFragment : Fragment() {
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        binding.tfAddSubCategory.error = "Categoria já existe"
+                        binding.tfAddSubCategory.error = "Subcategoria já existe"
                         binding.progressBarAddSubCategory.visibility = ProgressBar.GONE
                     } else {
                         saveSubCategoryToFirebase(subCategoryName)
@@ -93,7 +93,7 @@ class AddSubCategoryFragment : Fragment() {
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(
                         activity,
-                        "Erro ao verificar categoria. Tente novamente.",
+                        "Erro ao verificar Subcategoria. Tente novamente.",
                         Toast.LENGTH_SHORT
                     ).show()
                     binding.progressBarAddSubCategory.visibility = ProgressBar.GONE
@@ -111,7 +111,7 @@ class AddSubCategoryFragment : Fragment() {
                     if (task.isSuccessful) {
                         Toast.makeText(
                             activity,
-                            "Subategoria salva com sucesso",
+                            "Subcategoria salva com sucesso",
                             Toast.LENGTH_SHORT
                         )
                             .show()
