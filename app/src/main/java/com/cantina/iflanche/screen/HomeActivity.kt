@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.cantina.iflanche.R
 import com.cantina.iflanche.databinding.ActivityHomeBinding
 import com.cantina.iflanche.firebase.LoadCategories
@@ -114,13 +115,25 @@ class HomeActivity : AppCompatActivity() {
 
     private fun drawerMenuItemAdmin(item: MenuItem) {
         when (item.itemId) {
-            R.id.nav_home_admin -> loadFragment(HomeFragment(), "IF-Lanche")
-            R.id.nav_product_admin -> loadFragment(ProductFragment(), "Cadastrar Produto")
-            R.id.nav_category_admin -> loadFragment(CategoryFragment(), "Gerenciar Categoria")
-            R.id.nav_subcategory_admin -> loadFragment(
-                SubcategoryFragment(),
-                "Cadastrar Subcategoria"
-            )
+            R.id.nav_home_admin -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(HomeFragment(), "IF-Lanche")
+            }
+
+            R.id.nav_product_admin -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(ProductFragment(), "Cadastrar Produto")
+            }
+
+            R.id.nav_category_admin -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(CategoryFragment(), "Gerenciar Categoria")
+            }
+
+            R.id.nav_subcategory_admin -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(SubcategoryFragment(), "Cadastrar Subcategoria")
+            }
 
             R.id.nav_exit_admin -> {
                 FirebaseAuth.getInstance().signOut()
@@ -134,9 +147,21 @@ class HomeActivity : AppCompatActivity() {
 
     private fun drawerMenuItemStudent(item: MenuItem) {
         when (item.itemId) {
-            R.id.nav_home_student -> loadFragment(HomeFragment(), "IF-Lanche")
-            R.id.nav_profile_student -> loadFragment(ProfileStudentFragment(), "Perfil de Usuário")
-            R.id.nav_config_student -> loadFragment(ConfigStudentFragment(), "Configurações")
+            R.id.nav_home_student -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(HomeFragment(), "IF-Lanche")
+            }
+
+            R.id.nav_profile_student -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(ProfileStudentFragment(), "Perfil de Usuário")
+            }
+
+            R.id.nav_config_student -> {
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                loadFragment(ConfigStudentFragment(), "Configurações")
+            }
+
             R.id.nav_exit_admin -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)
