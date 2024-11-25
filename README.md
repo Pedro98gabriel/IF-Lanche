@@ -71,10 +71,13 @@ Para utilizar o Firebase em seu projeto, siga os passos abaixo:
 Após seguir esses passos, você terá o Firebase configurado e pronto para uso no aplicativo, em caso de dúvidas a [documentação](https://firebase.google.com/docs/android/setup?hl=pt) poderá ser consultada.
 
 #### Configurações Adicionais:
-Para que o aplicativo funcione corretamente, você precisa adicionar uma configuração no arquivo `local.properties` do seu projeto. 
 
-1. Abra o arquivo ``local.properties``, localizado na pasta ``Gradle Scripts``.
-2. Adicione a seguinte linha, substituindo `YOUR_SALT_VALUE` pelo valor desejado para o salt do bcrypt: ``BCRYPT_SALT=YOUR_SALT_VALUE``
+Para que o aplicativo funcione corretamente, é necessário adicionar algumas configurações no arquivo `local.properties` do seu projeto.
+
+1. Abra o arquivo `local.properties`, localizado na pasta `Gradle Scripts`.
+2. Adicione as seguintes linhas ao arquivo, substituindo `YOUR_VALUE` pelos valores desejados:
+   - `BCRYPT_SALT=YOUR_VALUE` (substitua `YOUR_VALUE` pelo valor desejado para o salt do bcrypt)
+   - `URL_FIREBASE=YOUR_VALUE` (substitua `YOUR_VALUE` pela URL do seu projeto no Firebase)
 3. Salve o arquivo.
-4. Conecte um dispositivo Android ou inicie um emulador.
+4. Conecte um dispositivo Android físico ou inicie um emulador Android.
 5. Clique em "Run" para compilar e executar o aplicativo.
