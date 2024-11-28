@@ -39,7 +39,7 @@ private const val urlFirebase: String = BuildConfig.URL_FIREBASE
 class ProductFragment : Fragment() {
     private var _binding: FragmentRegisterProductBinding? = null
     private val binding get() = _binding!!
-    private var itemID: String? = null // Nome da categoria a ser editada
+    private var itemID: String? = null // ID da categoria a ser editada
 
     private var btnAddProduct: Button? = null
     private var selectedCategory: String? = null
@@ -182,13 +182,16 @@ class ProductFragment : Fragment() {
         binding.btnAddProduct.setOnClickListener {
             CommonFunctions.clearFocusFromAllFields(inputFields, requireContext())
             if (isEditing) {
+                binding.progressBarRegisterProduct.visibility = ProgressBar.VISIBLE
                 if (imageUri != null) {
                     uploadImageToFirebaseUpdate { newImageUrl ->
                         updateProductImage(itemID!!, newImageUrl)
                         updateProductInDB(newImageUrl)
+                        binding.progressBarRegisterProduct.visibility = ProgressBar.GONE
                     }
                 } else {
                     updateProductInDB()
+                    binding.progressBarRegisterProduct.visibility = ProgressBar.GONE
                 }
             } else {
                 addProductToDB()
