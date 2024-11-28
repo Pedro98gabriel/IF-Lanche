@@ -76,6 +76,8 @@ class ProductFragment : Fragment() {
             binding.tfOptionsProductSubCategory,
         )
 
+        (activity as? HomeActivity)?.setAppBarTitle("Cadastrar Produto")
+        
         if (itemID != null) {
             isEditing = true
             binding.btnAddProduct.text = "Atualizar"
