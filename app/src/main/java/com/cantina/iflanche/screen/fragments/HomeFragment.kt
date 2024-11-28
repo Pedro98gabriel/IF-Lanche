@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,6 +70,12 @@ class HomeFragment : Fragment() {
                 categoriasList.clear()
                 categoriasList.addAll(categories)
                 categoriaAdapter.notifyDataSetChanged()
+                val categoryTextView = view?.findViewById<TextView>(R.id.itemTextCategoryNameTitle)
+                if (categoriasList.isEmpty()) {
+                    categoryTextView?.visibility = View.GONE
+                } else {
+                    categoryTextView?.visibility = View.VISIBLE
+                }
             },
             onError = { errorMessage ->
                 Log.e("HomeFragment", errorMessage)
