@@ -1,6 +1,8 @@
 package com.cantina.iflanche.screen
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
@@ -26,17 +28,22 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var drawerToggle: ActionBarDrawerToggle
     var categories: List<String>? = null
     private var userType: String? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+
+        userType =
+            sharedPreferences.getString("userType", null) ?: intent.getStringExtra("userType")
+
         loadCategories()
         appBarNotificationIcon()
 
         val toolbar: Toolbar = binding.toolbar
-        userType = intent.getStringExtra("userType")
 
         // Configura o menu de navegação de acordo com o tipo de usuário
         val navigationView = binding.navView
@@ -69,18 +76,6 @@ class HomeActivity : AppCompatActivity() {
         )
         binding.drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
-
-        if (savedInstanceState == null) {
-            if (userType == "Aluno") {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment()).commit()
-                navigationView.setCheckedItem(R.id.nav_home_student)
-            } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, HomeFragment()).commit()
-                navigationView.setCheckedItem(R.id.nav_home_admin)
-            }
-        }
 
         // Sempre carrega o HomeFragment para "Aluno" e "Admin"
         if (savedInstanceState == null) {
