@@ -73,7 +73,7 @@ class AddCategoryFragment : Fragment() {
     }
 
     private fun checkCategoryExists(categoryName: String) {
-        database.orderByValue().equalTo(categoryName)
+        database.orderByValue().equalTo(categoryName.lowercase())
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
