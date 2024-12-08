@@ -18,7 +18,7 @@ object DeleteProduct {
                     val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
                     storageRef.delete()
                         .addOnSuccessListener {
-                            // Depois de remover a imagem, apague o registro do produto no banco
+                            // Depois de remover a imagem, apaga o registro do produto no banco
                             productRef.removeValue()
                                 .addOnSuccessListener {
                                     onSuccess()
@@ -31,7 +31,7 @@ object DeleteProduct {
                             onError("Erro ao remover a imagem: ${exception.message}")
                         }
                 } else {
-                    // Caso não haja imagem, apague apenas os dados do produto
+                    // Caso não haja imagem, apaga apenas os dados do produto
                     productRef.removeValue()
                         .addOnSuccessListener {
                             onSuccess()
