@@ -1,7 +1,9 @@
-# IF-Lanche (Em Construção)
+# IF-Lanche
 
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_login.png" width="250" /> _
 <img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_cadastro.png" width="250" /> _
+<img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_inicial.png" width="250" /> _
+<img src="https://github.com/Pedro98gabriel/IF-Lanche/blob/master/imagens/tela_cadastro_produto.png" width="250" />
 
 ## Sobre o projeto:
 Este projeto é um aplicativo Android desenvolvido como parte do meu Trabalho de Conclusão de Curso em Análise e Desenvolvimento de Sistemas no IFPR, Campus Telêmaco Borba. O objetivo do aplicativo é facilitar a visualização dos itens disponíveis no cardápio da cantina do campus, oferecendo aos usuários uma forma rápida de acessar essas informações.
